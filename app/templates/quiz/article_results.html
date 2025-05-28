@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="quiz-results">
+        <h2>Quiz Results</h2>
+        <div class="score">
+            You scored {{ score }} out of {{ total }} ({{ percentage }}%)
+        </div>
+        
+        <div class="results-details">
+            <h3>Details:</h3>
+            <ul>
+                {% for result in results %}
+                <li>
+                    Question {{ result.question_num }}: {{ result.word }} - 
+                    <span class="correct-answer">{{ result.correct_article }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <a href="{{ url_for('quiz.quiz_list') }}" class="btn">Take Another Quiz</a>
+    </div>
+{% endblock %}

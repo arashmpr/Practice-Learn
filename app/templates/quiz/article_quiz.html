@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="quiz-question">
+    <div class="progress">
+        Question {{ question_num }} of {{ total_questions }}
+    </div>
+
+    <div class="word-card fade-in">
+        <h3>{{ word }}</h3>
+        {% if definition %}
+            <p class="definition">{{ definition }}</p>
+        {% endif %}
+    </div>
+
+    <form action="{{ url_for('quiz.submit_quiz') }}" method="post">
+        <div class="article-options">
+            <button type="submit" name="article" value="der" class="article-btn der">der</button>
+            <button type="submit" name="article" value="die" class="article-btn die">die</button>
+            <button type="submit" name="article" value="das" class="article-btn das">das</button>
+            <button type="submit" name="article" value="die_pl" class="article-btn die_pl">die Pl.</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

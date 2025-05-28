@@ -1,0 +1,185 @@
+word,article,plural,definition,lektion
+Name,der,Namen,name,1
+Vorname,der,Vornamen,first name,1
+Nachname,der,Nachnamen,last name,1
+Herr,der,Herren,Mr.,1
+Deutschkurs,der,Deutschkurse,german course,1
+Computer,der,Computer,computer,1
+Bus,der,Busse,bus,1
+Kaffee,der,Kaffees,coffee,1
+Tee,der,Tees,tea,1
+Sport,der,,sport,1
+Handynummer,die,Handynummern,mobile number,1
+Frau,die,Frauen,Mrs. / women,1
+Telefonnummer,die,Telefonnummern,telephone number,1
+Jeans,die,Jeans,jeans,1
+Email-Adresse,die,Email-Adressen,email address,1
+Bluse,die,Blusen,blouse,1
+Jacke,die,Jacken,jacket,1
+Pizza,die,Pizzas,pizza,1
+Tomate,die,Tomaten,tomato,1
+Sprache,die,Sprachen,language,1
+Schweiz,die,,switzerland,1
+Musik,die,,music,1
+Medizin,die,,medicine,1
+Auto,das,Autos,car,1
+Taxi,das,Taxis,taxi,1
+Bier,das,Biere,beer,1
+Müsli,das,Müslis,musli,1
+Mensch,der,Menschen,man / human being / man kind,2
+Hund,der,Hunde,dog,2
+Fußball,der,,football,2
+Freund,der,Freunde,boyfriend / male friend,2
+Vater,der,Väter,father,2
+Bruder,der,Brüder,brother,2
+Großvater,der,Großväter,grandfather,2
+Mann,der,Männer,man,2
+Junge,der,Jungen,boy,2
+Laptop,der,Laptops,laptop,2
+Friseur,der,Friseure,(male) hair dresser,2
+Architekt,der,Architekten,(male) architect,2
+Job,der,Jobs,job,2
+Kollege,der,Kollegen,(male) colleague,2
+Chef,der,Chefs,(male) boss,2
+Studie,die,Studien,essay / study,2
+Stadt,die,Städte,city / town,2
+Katze,die,Katzen,cat,2
+Freundin,die,Freundinnen,girlfriend / female friend,2
+Familie,die,Familien,family,2
+Mutter,die,Mütter,mother,2
+Schwester,die,Schwestern,sister,2
+Großmutter,die,Großmütter,grandmother,2
+Frau,die,Frauen,Mrs. / women,2
+Friseurin,die,Friseurinnen,(female) hair dresser,2
+Architektin,die,Architektinnen,(female) architect,2
+Kollegin,die,Kolleginnen,(female) colleague,2
+Chefin,die,Chefinnen,(female) boss,2
+App,die,Apps,app,2
+Pony,das,Ponys,pony,2
+Hobby,das,Hobbys,hobby,2
+Yoga,das,,yoga,2
+Mädchen,das,Mädchen,girl,2
+Handy,das,Handys,mobile,2
+Smartphone,das,Smartphones,smartphone,2
+Apfel,der,Äpfel,apple,3
+Salat,der,Salate,lettuce,3
+Orangensaft,der,Orangensäfte,orange juice,3
+Apfelsaft,der,Apfelsäfte,apple juice,3
+Wein,der,Weine,wine,3
+Milchkaffee,der,Milchkaffees,milk coffee,3
+Käse,der,,cheese,3
+Joghurt,der,Joghurts,yogurt,3
+Reis,der,,rice,3
+Fisch,der,Fische,fish,3
+Hamburger,der,Hamburger,hamburger,3
+Toast,der,Toasts,toast,3
+Honig,der,,honey,3
+Schinken,der,Schinken,ham,3
+Preis,der,Preise,price,3
+Cent,der,Cents,cent,3
+Euro,der,Euros,euro,3
+Liter,der,Liter,litre,3
+Koch,der,Köche,cook,3
+Grill,der,Grills,grill,3
+Gast,der,Gäste,guest,3
+Familienvater,der,Familienväter,family man,3
+Student,der,Studenten,student,3
+Deutschlehrer,der,Deutschlehrer,german teacher,3
+Tourist,der,Touristen,tourist,3
+Berliner,der,Berliner,berliner,3
+Vegetarier,der,Vegetarier,vegetarian,3
+Regenbogen,der,Regenbögen,rainbow,3
+Banane,die,Bananen,banana,3
+Orange,die,Orangen,orange,3
+Zitrone,die,Zitronen,lemon,3
+Kartoffel,die,Kartoffeln,potato,3
+Möhre,die,Möhren,carrot,3
+Cola,die,Colas,cola,3
+Milch,die,,milk,3
+Marmelade,die,Marmeladen,jam,3
+Butter,die,,butter,3
+Lasagne,die,Lasagnen,lasagne,3
+Wurst,die,Würste,sausage,3
+Flasche,die,Flaschen,bottle,3
+Köchin,die,Köchinnen,cook,3
+Studentin,die,Studentinnen,student,3
+Deutschlehrerin,die,Duetschlehrerinnen,german teacher,3
+Touristin,die,Touristinnen,tourist,3
+Berlinerin,die,Berlinerinnen,berliner,3
+Adresse,die,Adressen,address,3
+Webseite,die,Webseiten,website,3
+Vegetarierin,die,Vegetarierinnen,vegetarian,3
+Farbe,die,Farben,color,3
+Lieblingsfarbe,die,Lieblingsfarben,favorite color,3
+Obst,das,,fruit,3
+Gemüse,das,,vegetable,3
+Getränk,das,Getränke,drink,3
+Wasser,das,,water,3
+Milchprodukt,das,Milchprodukte,dairy product,3
+Fleisch,das,,meat,3
+Öl,das,Öle,oil,3
+Hähnchen,das,Hähnchen,chicken,3
+Brot,das,Brote,bread,3
+Croissant,das,Croissants,croissant,3
+Brötchen,das,Brötchen,bun,3
+Ei,das,Eier,egg,3
+Kilo,das,,kilo,3
+Gramm,das,,gram,3
+Stück,das,Stücke,piece / unit,3
+Lieblingsessen,das,Lieblingsessen,favorite food,3
+Essen,das,Essen,food,3
+Restaurant,das,Restaurants,restaurant,3
+Leben,das,Leben,life,3
+Tier,das,Tiere,animal,3
+Frühstück,das,,breakfast,3
+Beruf,der,Berufe,occupation,4
+Polizist,der,Polizisten,police officer,4
+Manager,der,Manager,manager,4
+IT-Ingenieur,der,IT-Ingenieure,IT engineer,4
+Taxifahrer,der,Taxifahrer,taxi driver,4
+Text,der,Texte,text,4
+Termin,der,Termine,appointment / deadline,4
+Monat,der,Monate,month,4
+Tag,der,Tage,day,4
+Rentner,der,Rentner,senior citizen,4
+Kamm,der,Kämme,comb,4
+Herd,der,Herde,stove,4
+Topf,der,Töpfe,pot,4
+Drucker,der,Drucker,printer,4
+USB-Stick,der,USB-Sticks,USB stick,4
+Support,der,Supporte,support,4
+Chat,der,Chats,chat,4
+Status,der,,status,4
+Tarif,der,Tarife,tariff / rate / price,4
+Podcast,der,Podcasts,podcast,4
+Partner,der,Partner,partner,4
+Kindergarten,der,Kindergärten,kindergarten,4
+Firma,die,Firmen,firm / company,4
+Visitenkarte,die,Visitenkarten,business card,4
+Arbeit,die,Arbeiten,work / job,4
+Polizistin,die,Polizistinnen,police officer,4
+Managerin,die,Managerinnen,manager,4
+IT-Ingenieurin,die,IT-Ingenieurinnen,IT engineer,4
+Taxifahrerin,die,Taxifahrerinnen,taxi driver,4
+Rentnerin,die,Rentnerinnen,senior citizen,4
+Party,die,Partys,party,4
+Schere,die,Scheren,scissors,4
+Bürste,die,Bürsten,brush,4
+Küche,die,Küchen,kitchen,4
+Maus,die,Mäuse,mouse,4
+Software,die,Softwares,software,4
+SMS,die,SMS,sms,4
+Show,die,Shows,show,4
+Partnerin,die,Partnerinnen,partner,4
+U-Bahn,die,U-Bahnen,subway,4
+Pause,die,Pausen,break,4
+Viertel,das,Viertel,quarter,4
+T-Shirt,das,T-Shirts,T-shirt,4
+Büro,das,Büros,office,4
+Telefon,das,Telefone,phone,4
+Telefongespräch,das,Telefongespräche,phone conversation,4
+Internet,das,,internet,4
+Radio,das,Radios,radio,4
+Interview,das,Interviews,interview,4
+Licht,das,Lichter,light,4
+Kind,das,kinder,child,4
