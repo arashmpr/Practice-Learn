@@ -3,4 +3,6 @@ from ..main import main
 
 @main.route('/')
 def home():
-    return render_template('pages/home.html')
+    quizzes = ['Article Quiz', 'PLural Quiz', 'Definition Quiz']
+    return render_template('pages/home.html',
+                           quizzes=quizzes)

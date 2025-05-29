@@ -6,10 +6,7 @@
 <div class="container">
     <div class="flex justify-content-between items-center my-4">
         <div class="text-secondary text-sm">
-            Welcome, {{ current_user.username if current_user.is_authenticated else 'Guest' }}
-        </div>
-        <div class="text-muted text-sm">
-            Current UTC Time: {{ current_time }}
+            Welcome {{ current_user.username if current_user.is_authenticated }}
         </div>
     </div>
 
@@ -20,7 +17,7 @@
             <div class="flex flex-col gap-4">
                 {% for quiz in quizzes %}
                     <div class="flex justify-content-between items-center p-4 border rounded-md bg-secondary">
-                        <span class="text-lg font-medium">{{ quiz.title }}</span>
+                        <span class="text-lg font-medium">{{ quiz }}</span>
                         <a href="{{ url_for('quiz.start_quiz', quiz_id=quiz.id) }}" 
                            class="bg-primary text-inverse px-4 py-2 rounded-md transition-fast hover:opacity-90">
                             Start Quiz
