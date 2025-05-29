@@ -32,7 +32,7 @@ class ArticleQuiz(QuizStrategies):
                 'question_num': i + 1
             })
     
-        return render_template('article_results.html', 
+        return render_template('article-results.html', 
                             score=score,
                             total=total,
                             results=results
@@ -40,7 +40,7 @@ class ArticleQuiz(QuizStrategies):
     
 class PluralQuiz(QuizStrategies):
     def render_question(self, word, question_num, total_questions):
-        return render_template('plural_quiz.html',
+        return render_template('plural-quiz.html',
                                word = word.word,
                                definition = word.definition,
                                question_num=question_num,
@@ -59,7 +59,7 @@ class PluralQuiz(QuizStrategies):
                 'question_num': i + 1
             })
     
-        return render_template('plural_results.html', 
+        return render_template('plural-results.html', 
                             score=score,
                             total=total,
                             results=results
@@ -67,7 +67,7 @@ class PluralQuiz(QuizStrategies):
 
 class DefinitionQuiz(QuizStrategies):
     def render_question(self, word, question_num, total_questions):
-        return render_template('definition_quiz.html',
+        return render_template('definition-quiz.html',
                                word=word.word,
                                question_num=question_num,
                                total_questions=total_questions
@@ -85,7 +85,7 @@ class DefinitionQuiz(QuizStrategies):
                 'question_num': i + 1
             })
     
-        return render_template('definition_results.html', 
+        return render_template('definition-results.html', 
                             score=score,
                             total=total,
                             results=results
