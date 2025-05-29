@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Article Quiz - Question {{ question_num }} of {{ total_questions }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="quiz-container">
+        <!-- Progress Bar -->
+        <div class="quiz-progress">
+            <div class="quiz-progress-text">
+                Question {{ question_num }} of {{ total_questions }}
+            </div>
+            <div class="quiz-progress-bar">
+                <div class="quiz-progress-fill" style="width: {{ (question_num / total_questions * 100) }}%"></div>
+            </div>
+        </div>
+
+        <!-- Question Card -->
+        <div class="quiz-question-card">
+            <div class="quiz-question-header">
+                <span class="quiz-question-type">Article Quiz</span>
+                <h2 class="quiz-question-word">{{ word }}</h2>
+                <p class="quiz-question-definition">{{ definition }}</p>
+            </div>
+
+            <!-- Answer Form -->
+            <form action="{{ url_for('quiz.submit') }}" method="POST" class="quiz-answer-form">
+                <div class="quiz-options-grid">
+                    <div class="quiz-option">
+                        <input type="radio" id="der" name="article" value="der" class="quiz-option-input" required>
+                        <label for="der" class="quiz-option-label">der</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="die" name="article" value="die" class="quiz-option-input" required>
+                        <label for="die" class="quiz-option-label">die</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="das" name="article" value="das" class="quiz-option-input" required>
+                        <label for="das" class="quiz-option-label">das</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="die-pl" name="article" value="die-pl" class="quiz-option-input" required>
+                        <label for="die-pl" class="quiz-option-label">die pl.</label>
+                    </div>
+                </div>
+
+                <div class="quiz-actions">
+                    <button type="submit" class="quiz-submit-btn">Submit Answer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
