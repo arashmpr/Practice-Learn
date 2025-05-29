@@ -56,9 +56,12 @@
 
 .nav-item {
   margin: 0;
+  text-decoration: none;
 }
 
 .nav-link {
+  display: flex;
+  gap: var(--space-4);
   color: var(--text-secondary);
   font-weight: var(--font-weight-medium);
   padding: var(--space-2) var(--space-3);
@@ -136,6 +139,7 @@
   color: var(--text-inverse);
   padding: var(--space-16) 0 var(--space-12);
   margin-bottom: var(--space-12);
+  border-radius: var(--radius-lg);
 }
 
 .page-header-content {

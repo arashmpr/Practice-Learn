@@ -2,7 +2,7 @@
 
 {% block title %}Choose Your Quiz - Language Learning{% endblock %}
 
-{% block head %}
+{% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
 {% endblock %}
 
@@ -16,7 +16,7 @@
     </div>
 </div>
 
-<div class="container">
+<section class="container">
     <div class="quiz-selection">
         <div class="quiz-options">
             {% for quiz in quizzes %}
@@ -29,9 +29,8 @@
         </div>
 
         <div class="quiz-settings">
-            <h3 class="quiz-settings-title">Quiz Settings</h3>
             <div class="quiz-settings-group">
-                <label class="quiz-settings-label" for="num-questions">Number of Questions:</label>
+                <label class="quiz-settings-label" for="num-questions">Number of Questions</label>
                 <select class="quiz-settings-select" id="num-questions">
                     <option value="5">5 Questions</option>
                     <option value="10" selected>10 Questions</option>
@@ -41,7 +40,7 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <script>
 function selectQuiz(quizType) {
