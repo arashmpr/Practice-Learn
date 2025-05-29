@@ -8,5 +8,5 @@ login_manager = LoginManager()
 
 @login_manager.user_loader
 def load_user(user_id):
-    from app.models import User  # Import here to avoid circular imports
+    from app.models.User import User
     return User.query.get(int(user_id))

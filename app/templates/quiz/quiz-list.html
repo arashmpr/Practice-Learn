@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Choose Your Quiz - Language Learning{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-content">
+            <h1 class="page-title">Choose Your Quiz</h1>
+            <p class="page-subtitle">Test your German language skills with our interactive quizzes</p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="quiz-selection">
+        <div class="quiz-options">
+            {% for quiz in quizzes %}
+            <div class="quiz-option-card" onclick="selectQuiz('{{ quiz.key }}')">
+                <h3 class="quiz-option-title">{{ quiz.name }}</h3>
+                <p class="quiz-option-description">{{ quiz.description }}</p>
+                <button class="quiz-start-btn" type="button">Start Quiz</button>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="quiz-settings">
+            <h3 class="quiz-settings-title">Quiz Settings</h3>
+            <div class="quiz-settings-group">
+                <label class="quiz-settings-label" for="num-questions">Number of Questions:</label>
+                <select class="quiz-settings-select" id="num-questions">
+                    <option value="5">5 Questions</option>
+                    <option value="10" selected>10 Questions</option>
+                    <option value="15">15 Questions</option>
+                    <option value="20">20 Questions</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function selectQuiz(quizType) {
+    const numQuestions = document.getElementById('num-questions').value;
+    const url = `{{ url_for('quiz.start') }}?quiz_type=${quizType}&num_questions=${numQuestions}`;
+    window.location.href = url;
+}
+</script>
+{% endblock %}

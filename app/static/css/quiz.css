@@ -15,15 +15,13 @@
 }
 
 .quiz-option-card {
-  background: var(--bg-primary);
-  border: 2px solid var(--border-color);
-  border-radius: var(--radius-lg);
+  background-color: var(--primary-light);
   padding: var(--space-8);
+  border-radius: var(--radius-xl);
   text-align: center;
+  box-shadow: var(--shadow-md);
   transition: all var(--transition-base);
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
+  border: 1px solid var(--border-color);
 }
 
 .quiz-option-card::before {
@@ -46,26 +44,6 @@
 
 .quiz-option-card:hover::before {
   transform: scaleX(1);
-}
-
-.quiz-option-icon {
-  width: 70px;
-  height: 70px;
-  background: var(--primary-light);
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto var(--space-6);
-  font-size: var(--font-size-2xl);
-  color: var(--primary-color);
-  transition: all var(--transition-base);
-}
-
-.quiz-option-card:hover .quiz-option-icon {
-  background: var(--primary-color);
-  color: var(--text-inverse);
-  transform: scale(1.1);
 }
 
 .quiz-option-title {

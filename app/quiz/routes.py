@@ -6,16 +6,16 @@ from ..quiz import quiz
 
 
 @quiz.route('/list')
-def quiz_list():
-    quiz_types = [
+def list():
+    quizzes = [
         {'name': 'Article Quiz', 'description': 'Guess the article of each word', 'key': "article"},
         {'name': 'Plural Quiz', 'description': 'Guess the plural form of each word', 'key': "plural"},
         {'name': 'Definition Quiz', 'description': 'Guess the definition of each word', 'key': "definition"}
     ]
-    return render_template('quiz_list.html', quizzes=quiz_types)
+    return render_template('quiz-list.html', quizzes=quizzes)
 
 @quiz.route('/start/')
-def start_quiz():
+def start():
     quiz_type = request.args.get("quiz_type")
     num_questions = int(request.args.get("num_questions", 10))
 
@@ -33,7 +33,7 @@ def start_quiz():
     return redirect(url_for("quiz.show_quiz"))
 
 @quiz.route('/quiz/')
-def show_quiz():
+def show():
     quiz_type = session['quiz_type']
     strategy = QUIZ_STRATEGIES.get(quiz_type)
     if not strategy:
@@ -50,7 +50,7 @@ def show_quiz():
     return strategy.render_question(word, current_idx + 1, len(word_ids))
 
 @quiz.route('/submit/', methods=['POST'])
-def submit_quiz():
+def submit():
     quiz_type = session['quiz_type']
     strategy = QUIZ_STRATEGIES.get(quiz_type)
 
@@ -69,7 +69,7 @@ def submit_quiz():
         return redirect(url_for('quiz.show_quiz'))
 
 @quiz.route('/results/')
-def show_results():
+def results():
     quiz_type = session['quiz_type']
     strategy = QUIZ_STRATEGIES.get(quiz_type)
     word_ids = session.get('quiz_words', [])
