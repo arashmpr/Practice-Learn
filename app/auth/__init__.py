@@ -7,3 +7,4 @@ auth = Blueprint(
 )
 
 from . import routes
+from . import forms
