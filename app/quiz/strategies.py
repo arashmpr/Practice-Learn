@@ -13,7 +13,7 @@ class QuizStrategies:
 
 class ArticleQuiz(QuizStrategies):
     def render_question(self, word, question_num, total_questions):
-        return render_template('article_quiz.html',
+        return render_template('article-quiz.html',
                                word = word.word,
                                definition = word.definition,
                                question_num=question_num,
@@ -81,7 +81,7 @@ class DefinitionQuiz(QuizStrategies):
         for i, word_id in enumerate(word_ids):
             results.append({
                 'word': Word.query.get(word_id).word,
-                'correct_definition': Word.query.get(word_id).article,
+                'correct_definition': Word.query.get(word_id).definition,  # Fixed: was word.article
                 'question_num': i + 1
             })
     

@@ -30,7 +30,7 @@ def start():
     session['current_idx'] = 0
     session['score'] = 0
 
-    return redirect(url_for("quiz.show_quiz"))
+    return redirect(url_for("quiz.show"))
 
 @quiz.route('/quiz/')
 def show():
@@ -42,7 +42,7 @@ def show():
     current_idx = session.get('current_idx', 0)
     word_ids = session.get('quiz_words', [])
     if current_idx >= len(word_ids):
-        return redirect(url_for('quiz.show_results'))
+        return redirect(url_for('quiz.results'))
     
     
     word = Word.query.get(word_ids[current_idx])
@@ -64,9 +64,9 @@ def submit():
     session["current_idx"] = current_idx + 1
 
     if current_idx + 1 >= len(word_ids):
-        return redirect(url_for('quiz.show_results'))
+        return redirect(url_for('quiz.results'))
     else:
-        return redirect(url_for('quiz.show_quiz'))
+        return redirect(url_for('quiz.show'))
 
 @quiz.route('/results/')
 def results():
@@ -77,7 +77,3 @@ def results():
     total = len(word_ids)
 
     return strategy.render_results(word_ids, score, total)
-
-    
-
-    

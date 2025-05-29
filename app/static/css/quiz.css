@@ -15,6 +15,7 @@
 }
 
 .quiz-option-card {
+  position: relative; /* Added this for ::before positioning */
   background-color: var(--primary-light);
   padding: var(--space-8);
   border-radius: var(--radius-xl);
@@ -22,6 +23,8 @@
   box-shadow: var(--shadow-md);
   transition: all var(--transition-base);
   border: 1px solid var(--border-color);
+  cursor: pointer; /* Added cursor pointer */
+  overflow: hidden; /* Prevent border overflow */
 }
 
 .quiz-option-card::before {
@@ -34,6 +37,7 @@
   background: linear-gradient(90deg, var(--primary-color), var(--primary-hover));
   transform: scaleX(0);
   transition: transform var(--transition-base);
+  transform-origin: left;
 }
 
 .quiz-option-card:hover {
@@ -68,6 +72,7 @@
   font-weight: var(--font-weight-medium);
   transition: all var(--transition-fast);
   min-width: 120px;
+  cursor: pointer;
 }
 
 .quiz-start-btn:hover {
@@ -539,6 +544,10 @@
     flex-direction: column;
     text-align: center;
     gap: var(--space-3);
+  }
+
+  .quiz-options {
+    grid-template-columns: 1fr;
   }
 }
 
