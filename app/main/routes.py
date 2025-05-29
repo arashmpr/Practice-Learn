@@ -1,9 +1,8 @@
 from flask import Blueprint, render_template
 from flask_login import current_user
 from datetime import datetime
-
-main = Blueprint('main', __name__)
+from ..main import main
 
 @main.route('/')
-def index():
+def home():
     return render_template('pages/home.html')

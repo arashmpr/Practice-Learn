@@ -5,7 +5,7 @@ from datetime import datetime
 from .forms import RegistrationForm, LoginForm
 from app.models.User import User
 from app.db import db
-auth = Blueprint('auth', __name__)
+from ..auth import auth
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
@@ -19,13 +19,10 @@ def register():
             flash('Username already exists. Please choose another one.', 'danger')
             return render_template('auth/register.html', form=form)
         
-        # Create new user
         new_user = User(
             username=form.username.data,
             password=generate_password_hash(form.password.data, method='sha256')
         )
-        
-        # Add user to database
         db.session.add(new_user)
         db.session.commit()
         

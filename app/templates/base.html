@@ -16,7 +16,7 @@
         <!-- Navigation -->
         <nav class="navbar">
             <div class="navbar-container">
-                <a href="{{ url_for('main.index') }}" class="navbar-brand">Practice-Learn</a>
+                <a href="{{ url_for('main.home') }}" class="navbar-brand">Practice-Learn</a>
                 <div class="nav-links">
                     {% if current_user.is_authenticated %}
                         <a href="{{ url_for('user.profile') }}">Profile</a>
