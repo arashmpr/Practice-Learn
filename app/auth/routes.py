@@ -19,11 +19,9 @@ def register():
             flash('Username already exists. Please choose another one.', 'danger')
             return render_template('auth/register.html', form=form)
         
-        new_user = User(
-            username=form.username.data,
-            password=generate_password_hash(form.password.data, method='sha256')
-        )
-        db.session.add(new_user)
+        user = User(username=form.username.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
         db.session.commit()
         
         flash('Registration successful! Please login.', 'success')
