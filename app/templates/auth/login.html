@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Login - Practice-Learn{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1 class="auth-title">Welcome Back</h1>
+            <p class="auth-subtitle">Sign in to your account</p>
+            <p class="auth-timestamp text-sm text-muted">
+                UTC: 2025-05-29 00:27:53
+            </p>
+        </div>
+        
+        <form class="auth-form" method="POST">
+            {{ form.csrf_token }}
+            
+            <div class="form-group">
+                {{ form.username.label(class="form-label") }}
+                {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else ""),
+                                placeholder="Enter your username",
+                                value="arashmpr") }}
+                {% if form.username.errors %}
+                    {% for error in form.username.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control" + (" is-invalid" if form.password.errors else ""),
+                                placeholder="Enter your password") }}
+                {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="remember-me" style="margin: var(--space-3) 0;">
+                <label class="flex items-center gap-2">
+                    <input type="checkbox" name="remember" class="form-checkbox">
+                    <span>Remember me</span>
+                </label>
+            </div>
+
+            {{ form.submit(class="btn-submit") }}
+            
+            <div class="text-center" style="margin-top: var(--space-4);">
+                <a href="{{ url_for('auth.forgot_password') }}" class="auth-footer-link">
+                    Forgot your password?
+                </a>
+            </div>
+        </form>
+
+        <div class="auth-footer">
+            <p class="auth-footer-text">
+                Don't have an account? 
+                <a href="{{ url_for('auth.register') }}" class="auth-footer-link">Register</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Auto-update UTC timestamp every second
+    function updateTimestamp() {
+        const now = new Date();
+        const timestamp = now.toISOString().replace('T', ' ').slice(0, 19);
+        document.querySelector('.auth-timestamp').textContent = 'UTC: ' + timestamp;
+    }
+    setInterval(updateTimestamp, 1000);
+    updateTimestamp();
+</script>
+{% endblock %}

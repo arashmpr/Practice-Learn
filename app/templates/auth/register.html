@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Register - Practice-Learn{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1 class="auth-title">Create Account</h1>
+            <p class="auth-subtitle">Join Practice-Learn today</p>
+        </div>
+        
+        <form class="auth-form" method="POST">
+            {{ form.csrf_token }}
+            
+            <div class="form-group">
+                {{ form.username.label(class="form-label") }}
+                {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else "")) }}
+                {% if form.username.errors %}
+                    {% for error in form.username.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control" + (" is-invalid" if form.password.errors else "")) }}
+                {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.confirm.label(class="form-label") }}
+                {{ form.confirm(class="form-control" + (" is-invalid" if form.confirm.errors else "")) }}
+                {% if form.confirm.errors %}
+                    {% for error in form.confirm.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            {{ form.submit(class="btn-submit") }}
+        </form>
+
+        <div class="auth-footer">
+            <p class="auth-footer-text">
+                Already have an account? 
+                <a href="{{ url_for('auth.login') }}" class="auth-footer-link">Login</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
