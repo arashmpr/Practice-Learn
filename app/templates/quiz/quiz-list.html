@@ -24,7 +24,6 @@
             <div class="quiz-option-card" onclick="selectQuiz('{{ quiz.key }}', '{{ quiz.name }}')">
                 <h3 class="quiz-option-title">{{ quiz.name }}</h3>
                 <p class="quiz-option-description">{{ quiz.description }}</p>
-                <button class="quiz-start-btn" type="button">Start Quiz</button>
             </div>
             {% endfor %}
         </div>
@@ -50,12 +49,12 @@
             </div>
 
             <div class="lecture-options" id="lectureOptions">
-                <!-- Lecture options will be populated by JavaScript -->
+               
             </div>
         </div>
 
         <div class="quiz-settings-section">
-            <h3 class="settings-title">Quiz Settings</h3>
+            <h3 class="settings-title">Settings</h3>
                 
             <div class="settings-group">
                 <label class="settings-label" for="modalNumQuestions">Number of Questions</label>

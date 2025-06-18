@@ -56,7 +56,6 @@ def show():
     if current_idx >= len(word_ids):
         return redirect(url_for('quiz.results'))
     
-    
     word = Word.query.get(word_ids[current_idx])
 
     return strategy.render_question(word, current_idx + 1, len(word_ids))
@@ -64,14 +63,11 @@ def show():
 @quiz.route('/submit/', methods=['POST'])
 @csrf.exempt
 def submit():
-    print("enter the submit")
     quiz_type = session['quiz_type']
     strategy = QUIZ_STRATEGIES.get(quiz_type)
-    print("be here 1")
     current_idx = session.get('current_idx', 0)
     word_ids = session.get('quiz_words', [])
     word = Word.query.get(word_ids[current_idx])
-    print("be here 2")
     if strategy.check_answers(word, request):
         session['score'] += 1
     
