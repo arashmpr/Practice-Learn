@@ -4,6 +4,7 @@ from app.quiz.strategies import QUIZ_STRATEGIES
 import random
 from ..quiz import quiz
 from app.extensions import csrf
+from . import utils
 
 
 @quiz.route('/list')
@@ -13,17 +14,27 @@ def list():
         {'name': 'Plural Quiz', 'description': 'Guess the plural form of each word', 'key': "plural"},
         {'name': 'Definition Quiz', 'description': 'Guess the definition of each word', 'key': "definition"}
     ]
-    return render_template('quiz-list.html', quizzes=quizzes)
+    lectures = utils.get_lectures()
+
+    return render_template('quiz-list.html', quizzes=quizzes, lectures=lectures)
 
 @quiz.route('/start/')
 def start():
     quiz_type = request.args.get("quiz_type")
     num_questions = int(request.args.get("num_questions", 10))
+    selected_lectures = request.args.getlist("lectures")
 
     if quiz_type not in QUIZ_STRATEGIES:
         return "Invalid quiz type", 400
     
-    words = Word.query.all()
+    if selected_lectures:
+        lecture_ids = [int(lecture_id) for lecture_id in selected_lectures]
+        words = Word.query.filter(Word.lektion.in_(lecture_ids)).all()
+    else:
+        words = Word.query.all()
+    
+    if len(words) == 0:
+        return "No words found in that lecture", 400
     selected = random.sample(words, min(num_questions, len(words)))
 
     session['quiz_type'] = quiz_type
