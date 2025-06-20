@@ -1,0 +1,39 @@
+/* ========================================
+   RESULTS.CSS - Result Pages Specific Styles
+   ======================================== */
+
+/* Result Container */
+.result-container {
+  padding: var(--space-6) var(--space-10);
+}
+
+.result-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: 0 var(--space-10);
+}
+
+.result-item-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+}
+
+.result-item-word {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--space-3);
+    color: var(--text-primary);
+    padding: 0 var(--space-6);
+}
+
+.result-item-correct-answer {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    margin-bottom: var(--space-6);
+    color: var(--success-color);
+    padding: 0 var(--space-8);
+}
+
+

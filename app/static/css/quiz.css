@@ -5,11 +5,13 @@
 /* Quiz List Page */
 .quiz-selection {
   padding: var(--space-8) 0;
+  /* padding: 0 0; */
 }
 
 .quiz-options {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  /* grid-template-rows: repeat(auto-fit, minmax(280px, 1fr)); */
   gap: var(--space-6);
   margin: var(--space-8) 0;
 }

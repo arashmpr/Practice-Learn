@@ -1,0 +1,10 @@
+{% extends "results.html" %}
+
+{% block extra_results %}
+    {% for result in results %}
+        <div class="result-item-card">
+            <h3 class="result-item-word">{{ result.question_num }}. {{ result.word }}</h3>
+            <p class="result-item-correct-answer">{{ result.correct_definition }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}

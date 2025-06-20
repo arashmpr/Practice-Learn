@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Choose Your Quiz - Language Learning{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/results.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-content">
+            <h1 class="page-title">Results</h1>
+            <p class="page-subtitle">You got {{ score }}/{{ total }} questions right!</p>
+        </div>
+    </div>
+</div>
+
+<section class="container">
+    <div class="result-container">
+        <div class="result-items">
+            {% block extra_results %}{% endblock %}
+        </div>
+    </div>
+</section>
+{% endblock %}
