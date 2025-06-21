@@ -8,23 +8,26 @@ from ..auth import auth
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
+    # if user is logged in
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
     
+    # user is not logged in
     form = RegistrationForm() 
     if form.validate_on_submit():
-        print("what?")
         user = User.query.filter_by(username=form.username.data).first()
+        # if user exists
         if user:
             flash('Username already exists. Please choose another one.', 'danger')
             return render_template('auth/register.html', form=form)
         
+        # add user, user does not exist
         user = User(username=form.username.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
 
-
+        # login user
         login_user(user)
         return redirect(url_for('main.home'))
     
@@ -32,9 +35,11 @@ def register():
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    # user logged in
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
     
+    # user not logged in
     form = LoginForm() 
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()

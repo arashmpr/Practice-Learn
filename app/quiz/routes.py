@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for, session
+from flask_login import current_user
 from app.models.Word import Word
 from app.quiz.strategies import QUIZ_STRATEGIES
 import random
@@ -9,6 +10,9 @@ from . import utils
 
 @quiz.route('/list')
 def list():
+    if not current_user.is_authenticated:
+        return redirect(url_for('auth.register'))
+
     quizzes = [
         {'name': 'Article Quiz', 'description': 'Guess the article of each word', 'key': "article"},
         {'name': 'Plural Quiz', 'description': 'Guess the plural form of each word', 'key': "plural"},
