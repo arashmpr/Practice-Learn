@@ -12,21 +12,31 @@ from . import utils
 def list():
     if not current_user.is_authenticated:
         return redirect(url_for('auth.register'))
-
-    quizzes = [
-        {'name': 'Article Quiz', 'description': 'Guess the article of each word', 'key': "article"},
-        {'name': 'Plural Quiz', 'description': 'Guess the plural form of each word', 'key': "plural"},
-        {'name': 'Definition Quiz', 'description': 'Guess the definition of each word', 'key': "definition"}
-    ]
     lectures = utils.get_lectures()
 
     return render_template('quiz-list.html', quizzes=quizzes, lectures=lectures)
 
 @quiz.route('/start/')
 def start():
+    # get request args
     quiz_type = request.args.get("quiz_type")
     num_questions = int(request.args.get("num_questions", 10))
-    selected_lectures = request.args.getlist("lectures")
+    selected_lessons = request.args.getlist("lessons")
+    has_definition = request.args.get("has_definition")
+    has_plural = request.args.get("has_plural")
+    has_article = request.args.get("has_article")
+    has_time_limit = request.args.get("has_time_limit")
+    time_limit = request.args.get("time_limit")
+
+    settings_info = {
+        "num_questions": num_questions,
+        "selected_lectures": selected_lectures,
+        "has_definition": has_definition,
+        "has_plural": has_plural,
+        "has_article": has_article,
+        "has_time_limit": has_time_limit,
+        "time_limit": time_limit
+    }
 
     if quiz_type not in QUIZ_STRATEGIES:
         return "Invalid quiz type", 400
