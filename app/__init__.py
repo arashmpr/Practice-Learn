@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from app.utils import sync_words
 import os
 from app.main import main
-from app.quiz import quiz
+from app.practice import quiz
 from app.auth import auth
 from app.user import user
 from app.db import db

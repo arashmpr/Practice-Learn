@@ -1,22 +1,22 @@
 from flask import render_template, request, redirect, url_for, session
 from flask_login import current_user
 from app.models.Word import Word
-from app.quiz.strategies import QUIZ_STRATEGIES
+from app.practice.strategies import QUIZ_STRATEGIES
 import random
-from ..quiz import quiz
+from ..practice import practice
 from app.extensions import csrf
 from . import utils
 
 
-@quiz.route('/list')
-def list():
+@practice.route('/list')
+def show_list():
     if not current_user.is_authenticated:
         return redirect(url_for('auth.register'))
-    lectures = utils.get_lectures()
+    lessons = utils.get_lessons()
 
     return render_template('quiz-list.html', quizzes=quizzes, lectures=lectures)
 
-@quiz.route('/start/')
+@practice.route('/start/')
 def start():
     # get request args
     quiz_type = request.args.get("quiz_type")
@@ -58,7 +58,7 @@ def start():
 
     return redirect(url_for("quiz.show"))
 
-@quiz.route('/quiz/')
+@practice.route('/quiz/')
 def show():
     quiz_type = session['quiz_type']
     strategy = QUIZ_STRATEGIES.get(quiz_type)
@@ -74,7 +74,7 @@ def show():
 
     return strategy.render_question(word, current_idx + 1, len(word_ids))
 
-@quiz.route('/submit/', methods=['POST'])
+@practice.route('/submit/', methods=['POST'])
 @csrf.exempt
 def submit():
     quiz_type = session['quiz_type']
@@ -92,7 +92,7 @@ def submit():
     else:
         return redirect(url_for('quiz.show'))
 
-@quiz.route('/results/')
+@practice.route('/results/')
 def results():
     quiz_type = session['quiz_type']
     strategy = QUIZ_STRATEGIES.get(quiz_type)

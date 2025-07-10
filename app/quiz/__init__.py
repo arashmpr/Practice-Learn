@@ -1,9 +1,0 @@
-from flask import Blueprint
-
-quiz = Blueprint(
-    'quiz',                          
-    __name__,
-    template_folder='../templates/quiz'                     
-)
-
-from . import routes

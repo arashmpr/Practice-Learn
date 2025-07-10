@@ -7,9 +7,9 @@ quizzes = [
     {'title': 'Definition Quiz', 'description': 'Type the definition of each word', 'key': "definition"}
 ]
 
-def get_lectures():
+def get_lessons():
     lesson_ids = get_lesson_ids()
-    return [{"id": lesson_id, "name": f"Lecture {lecture_id}"} for lecture_id in lesson_ids]
+    return [{"id": lesson_id, "name": f"Lecture {lesson_id}"} for lesson_id in lesson_ids]
 
 
 def get_lesson_ids():
