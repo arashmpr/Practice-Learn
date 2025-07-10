@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, session
 from flask_login import current_user
 from app.models.Word import Word
-from app.practice.strategies import QUIZ_STRATEGIES
+from app.practice.strategies import PRACTICE_STRATEGIES
 import random
 from ..practice import practice
 from app.extensions import csrf
@@ -14,36 +14,25 @@ def show_list():
         return redirect(url_for('auth.register'))
     lessons = utils.get_lessons()
 
-    return render_template('quiz-list.html', quizzes=quizzes, lectures=lectures)
+    return render_template('list.html', practices=utils.practices, lessons=lessons)
 
 @practice.route('/start/')
 def start():
-    # get request args
-    quiz_type = request.args.get("quiz_type")
-    num_questions = int(request.args.get("num_questions", 10))
+
+    practice_type = request.args.get("practice_type")
     selected_lessons = request.args.getlist("lessons")
-    has_definition = request.args.get("has_definition")
-    has_plural = request.args.get("has_plural")
-    has_article = request.args.get("has_article")
-    has_time_limit = request.args.get("has_time_limit")
-    time_limit = request.args.get("time_limit")
+    settings_info = utils.get_settings_info_from_request(request)
 
-    settings_info = {
-        "num_questions": num_questions,
-        "selected_lectures": selected_lectures,
-        "has_definition": has_definition,
-        "has_plural": has_plural,
-        "has_article": has_article,
-        "has_time_limit": has_time_limit,
-        "time_limit": time_limit
-    }
-
-    if quiz_type not in QUIZ_STRATEGIES:
-        return "Invalid quiz type", 400
+    # check practice type (e.g. article, definition, plural)
+    if practice_type not in PRACTICE_STRATEGIES:
+        return "Invalid Practice Type", 400
     
-    if selected_lectures:
-        lecture_ids = [int(lecture_id) for lecture_id in selected_lectures]
-        words = Word.query.filter(Word.lektion.in_(lecture_ids)).all()
+    practice_strategy = PRACTICE_STRATEGIES.get(practice_type)
+    practice_strategy.create()
+    
+    if selected_lessons:
+        lesson_ids = [int(lesson_id) for lesson_id in selected_lessons]
+        words = Word.query.filter(Word.lesson.in_(lesson_ids)).all()
     else:
         words = Word.query.all()
     
