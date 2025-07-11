@@ -1,20 +1,24 @@
 from flask import Flask, render_template
 from dotenv import load_dotenv
-from app.utils import sync_words
 import os
+
 from app.main import main
-from app.practice import quiz
+from app.practice import practice
 from app.auth import auth
 from app.user import user
+
+from app.word import insert_words
+from app.question import generate_question_bank
+
 from app.db import db
-from app.extensions import bcrypt, csrf, login_manager  # Add login_manager to imports
+from app.extensions import bcrypt, csrf, login_manager
 from flask_login import LoginManager
 
 def register_blueprints(app):
     app.register_blueprint(main)
     app.register_blueprint(auth)
     app.register_blueprint(user)
-    app.register_blueprint(quiz)
+    app.register_blueprint(practice)
 
 def register_error_handlers(app):
     @app.errorhandler(404)
@@ -51,7 +55,10 @@ def create_app():
         register_blueprints(app)
         register_error_handlers(app)
         
+        # db.drop_all() #for restarting db
         db.create_all()
-        sync_words.sync_words_from_csv('data/words.csv')
+        insert_words('data/words.csv')
+        print("we insert words")
+        generate_question_bank()
         
     return app

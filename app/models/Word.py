@@ -8,6 +8,6 @@ class Word(db.Model):
     definition = db.Column(db.String)
     lesson = db.Column(db.Integer)
 
-    __table_args__ = (
-        db.UniqueConstraint('word', 'lesson', name='unique_word_lesson'),
-    )
+    # __table_args__ = (
+    #     db.UniqueConstraint('word', 'lesson', name='unique_word_lesson'),
+    # )
