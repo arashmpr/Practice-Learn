@@ -30,7 +30,15 @@ def register_error_handlers(app):
         db.session.rollback()
         return render_template('errors/500.html'), 500
 
-def create_app():
+def init_database():
+    """Initialize database with default data"""
+    db.create_all()
+    insert_words('data/words.csv')
+    print("Words inserted successfully")
+    generate_question_bank()
+    print("Question bank generated successfully")
+
+def create_app(init_db=True):
     load_dotenv()
 
     app = Flask(__name__)
@@ -55,10 +63,8 @@ def create_app():
         register_blueprints(app)
         register_error_handlers(app)
         
-        # db.drop_all() #for restarting db
-        db.create_all()
-        insert_words('data/words.csv')
-        print("we insert words")
-        generate_question_bank()
+        # Only initialize database if requested
+        if init_db:
+            init_database()
         
     return app

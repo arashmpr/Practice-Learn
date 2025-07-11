@@ -1,50 +1,65 @@
 from app.db import db
 from datetime import datetime
+from sqlalchemy import Column, Integer, String, Text, UniqueConstraint
+from sqlalchemy.ext.declarative import declarative_base
 
-class Question(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    question_type = db.Column(db.String(50), nullable=False)
-    answer_type = db.Column(db.String(200), nullable=False)
-    question_text = db.Column(db.String, nullable=False)
+Base = declarative_base()
+
+class Question(Base):
+    __tablename__ = 'questions'
+
+    id = Column(Integer, primary_key=True)
+    question_type = Column(String(64), nullable=False)
+    answer_type = Column(String(64), nullable=False)
+    question_text = Column(String(256), nullable=False)
+
+    lesson = Column(Integer, nullable=False)
     
 
     # created_at = db.Column(db.DateTime, default=datetime.now(datetime.UTC))
-
     __mapper_args = {
         'polymorphic_identity': 'question',
         'polymorphic_on': question_type
     }
 
-class SingleChoiceQuestion(db.Model):
+class SingleChoiceQuestion(Base):
     __tablename__ = 'single_choice_question'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
 
-    tag = db.Column(db.String(50), nullable=False)
-    question_type = db.Column(db.String(200), default='single_choice_question', nullable=False)
-    question_text = db.Column(db.String, nullable=False)
+    tag = Column(String(32), nullable=False)
+    question_type = Column(String(64), default='single_choice_question', nullable=False)
+    question_text = Column(String(256), nullable=False)
     
-    options = db.Column(db.JSON, nullable=False)
-    correct_answer = db.Column(db.Text, nullable=False)
+    options = Column(db.JSON, nullable=False)
+    correct_answer = Column(Text, nullable=False)
 
-    definition = db.Column(db.Text)
-    plural = db.Column(db.Text)
-    lesson = db.Column(db.Integer, nullable=False)
+    definition = Column(String(32))
+    plural = Column(String(32))
+    lesson = Column(Integer, nullable=False)
 
-class TextBoxQuestion(db.Model):
+    __table_args__ = (
+        UniqueConstraint('tag', 'question_type', 'question_text', 'lesson', name='uq_question_fields'),
+    )
+
+class TextBoxQuestion(Base):
     __tablename__ = 'text_box_question'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
 
-    tag = db.Column(db.String(50), nullable=False)
-    question_type = db.Column(db.String(200), default='text_box_question', nullable='False')
-    question_text = db.Column(db.String(200), nullable=False)
+    tag = Column(String(32), nullable=False)
+    question_type = Column(String(32), default='text_box_question', nullable='False')
+    question_text = Column(String(256), nullable=False)
 
-    correct_answer = db.Column(db.Text, nullable=False)
+    correct_answer = Column(Text, nullable=False)
 
-    definition = db.Column(db.Text)
-    plural = db.Column(db.Text)
-    lesson = db.Column(db.Integer, nullable=False)
+    definition = Column(Text)
+    plural = Column(Text)
+    lesson = Column(Integer, nullable=False)
+
+    __table_args__ = (
+        UniqueConstraint('tag', 'question_type', 'question_text', 'lesson', name='uq_question_fields'),
+    )
 
 
 
