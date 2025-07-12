@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}Choose Your Quiz - Language Learning{% endblock %}
+{% block title %}Choose Your Practice{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/modal-quiz.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/practice.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modal-practice.css') }}">
 {% endblock %}
 
 {% block content %}
 <div class="page-header">
     <div class="container">
         <div class="page-header-content">
-            <h1 class="page-title">Choose Your Quiz</h1>
-            <p class="page-subtitle">Test your German language skills with our interactive quizzes</p>
+            <h1 class="page-title">Choose Your Practice</h1>
+            <p class="page-subtitle">Test your German language skills with our interactive practices</p>
         </div>
     </div>
 </div>
@@ -20,10 +20,10 @@
 <section class="container">
     <div class="quiz-selection">
         <div class="quiz-options">
-            {% for quiz in quizzes %}
-            <div class="quiz-option-card" onclick="selectQuiz('{{ quiz.key }}', '{{ quiz.name }}')">
-                <h3 class="quiz-option-title">{{ quiz.name }}</h3>
-                <p class="quiz-option-description">{{ quiz.description }}</p>
+            {% for practice in practices %}
+            <div class="quiz-option-card" onclick="selectQuiz('{{ practice.key }}', '{{ practice.title }}')">
+                <h3 class="quiz-option-title">{{ practice.title }}</h3>
+                <p class="quiz-option-description">{{ practice.description }}</p>
             </div>
             {% endfor %}
         </div>
@@ -36,7 +36,7 @@
         <button class="close-btn" onclick="closeLectureModal()">&times;</button>
             
         <div class="modal-header">
-            <h2 class="modal-title" id="modalTitle">Article Quiz</h2>
+            <h2 class="modal-title" id="modalTitle">Article Practice</h2>
             <p class="modal-subtitle">Select the lectures you want to practice</p>
         </div>
 
@@ -73,130 +73,13 @@
         </div>
     </div>
 </div>
+{% endblock %}
 
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/practice-list.js') }}"></script>
 <script>
-// Global variables to store current quiz selection
-let selectedQuizType = '';
-let selectedQuizName = '';
-let lectures = {{ lectures|tojson|safe }};
-
-function selectQuiz(quizType, quizName) {
-    openLectureModal(quizType, quizName);
-}
-
-function openLectureModal(quizType, quizName) {
-    selectedQuizType = quizType;
-    selectedQuizName = quizName;
-    document.getElementById('modalTitle').textContent = quizName;
-            
-    const lectureOptionsContainer = document.getElementById('lectureOptions');
-    lectureOptionsContainer.innerHTML = '';
-            
-    lectures.forEach(lecture => {
-        const optionDiv = document.createElement('div');
-        optionDiv.className = 'lecture-option';
-                
-        optionDiv.innerHTML = `
-        <input type="checkbox" id="lecture-${lecture.id}" class="lecture-checkbox" onchange="updateStartButton()">
-        <label for="lecture-${lecture.id}" class="lecture-label">
-            <div class="lecture-checkbox-icon"></div>
-            <div class="lecture-info">
-                <div class="lecture-name">${lecture.name}</div>
-                ${lecture.description ? `<div class="lecture-description">${lecture.description}</div>` : ''}
-            </div>
-        </label>
-        `;
-                
-        lectureOptionsContainer.appendChild(optionDiv);
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeQuizSelection({ lessons,tojson,safe });
     });
-            
-    document.getElementById('lectureModal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeLectureModal() {
-    document.getElementById('lectureModal').classList.remove('active');
-    document.body.style.overflow = '';
-
-    setTimeout(() => {
-        document.getElementById('selectAll').checked = false;
-        document.querySelectorAll('.lecture-checkbox').forEach(cb => cb.checked = false);
-        updateStartButton();
-    }, 300);
-}
-
-function toggleSelectAll() {
-    const selectAllCheckbox = document.getElementById('selectAll');
-    const lectureCheckboxes = document.querySelectorAll('.lecture-checkbox');
-        
-    lectureCheckboxes.forEach(checkbox => {
-        checkbox.checked = selectAllCheckbox.checked;
-    });
-        
-    updateStartButton();
-}
-
-function updateStartButton() {
-    const checkedLectures = document.querySelectorAll('.lecture-checkbox:checked');
-    const startBtn = document.getElementById('startQuizBtn');
-    startBtn.textContent = `Start Quiz`;
-        
-    if (checkedLectures.length > 0) {
-        startBtn.disabled = false;
-    } else {
-        startBtn.disabled = true;
-    }
-        
-    const selectAllCheckbox = document.getElementById('selectAll');
-    const totalLectures = document.querySelectorAll('.lecture-checkbox').length;
-        
-    if (checkedLectures.length === 0) {
-        selectAllCheckbox.indeterminate = false;
-        selectAllCheckbox.checked = false;
-    } else if (checkedLectures.length === totalLectures) {
-        selectAllCheckbox.indeterminate = false;
-        selectAllCheckbox.checked = true;
-    } else {
-        selectAllCheckbox.indeterminate = true;
-    }
-}
-
-function startQuizWithLectures() {
-    console.log("Starting quiz with lectures...");
-    
-    const selectedLectures = Array.from(document.querySelectorAll('.lecture-checkbox:checked'))
-        .map(cb => cb.id.replace('lecture-', ''));
-    const numQuestions = document.getElementById('modalNumQuestions').value;
-        
-    if (selectedLectures.length === 0) {
-        alert('Please select at least one lecture.');
-        return;
-    }
-        
-    // Build URL with selected lectures
-    const lectureParams = selectedLectures.map(id => `lectures=${id}`).join('&');
-    const url = `/start/?quiz_type=${selectedQuizType}&num_questions=${numQuestions}&${lectureParams}`;
-        
-    console.log('Starting quiz with URL:', url);
-    console.log('Selected quiz type:', selectedQuizType);
-    console.log('Selected lectures:', selectedLectures);
-    
-    window.location.href = url;
-    closeLectureModal();
-}
-
-// Close modal when clicking outside
-document.getElementById("lectureModal").addEventListener('click', function(e) {
-    if (e.target == this) {
-        closeLectureModal();
-    }
-});
-
-document.addEventListener('keydown', function(e) {
-    if (e.key == 'Escape' && document.getElementById("lectureModal").classList.contains('active')) {
-        closeLectureModal();
-    }
-});
-
 </script>
 {% endblock %}
