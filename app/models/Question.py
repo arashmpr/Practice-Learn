@@ -1,11 +1,8 @@
 from app.db import db
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import Column, Integer, String, Text, UniqueConstraint
-from sqlalchemy.ext.declarative import declarative_base
 
-Base = declarative_base()
-
-class Question(Base):
+class Question(db.Model):
     __tablename__ = 'questions'
 
     id = Column(Integer, primary_key=True)
@@ -16,13 +13,14 @@ class Question(Base):
     lesson = Column(Integer, nullable=False)
     
 
-    # created_at = db.Column(db.DateTime, default=datetime.now(datetime.UTC))
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+
     __mapper_args = {
         'polymorphic_identity': 'question',
         'polymorphic_on': question_type
     }
 
-class SingleChoiceQuestion(Base):
+class SingleChoiceQuestion(db.Model):
     __tablename__ = 'single_choice_question'
 
     id = Column(Integer, primary_key=True)
@@ -39,10 +37,10 @@ class SingleChoiceQuestion(Base):
     lesson = Column(Integer, nullable=False)
 
     __table_args__ = (
-        UniqueConstraint('tag', 'question_type', 'question_text', 'lesson', name='uq_question_fields'),
+        UniqueConstraint('tag', 'question_type', 'question_text', 'lesson', name='uq_questions_sc_fields'),
     )
 
-class TextBoxQuestion(Base):
+class TextBoxQuestion(db.Model):
     __tablename__ = 'text_box_question'
 
     id = Column(Integer, primary_key=True)
@@ -58,7 +56,7 @@ class TextBoxQuestion(Base):
     lesson = Column(Integer, nullable=False)
 
     __table_args__ = (
-        UniqueConstraint('tag', 'question_type', 'question_text', 'lesson', name='uq_question_fields'),
+        UniqueConstraint('tag', 'question_type', 'question_text', 'lesson', name='uq_questions_tb_fields'),
     )
 
 

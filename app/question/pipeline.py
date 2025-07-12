@@ -7,5 +7,5 @@ class QuestionBankPipeline():
     
     def run(self, words):
         for step in self.steps:
-            step.generate(words)
+            step.process(words)
 
