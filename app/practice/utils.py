@@ -20,21 +20,19 @@ def get_lesson_ids():
 
 def get_settings_info_from_request(request):
     num_questions = int(request.args.get("num_questions", 10))
-    selected_lessons = request.args.getlist("lessons")
-    has_definition = request.args.get("has_definition")
-    has_plural = request.args.get("has_plural")
-    has_article = request.args.get("has_article")
-    has_time_limit = request.args.get("has_time_limit")
-    time_limit = request.args.get("time_limit")
+    # has_definition = request.args.get("has_definition")
+    # has_plural = request.args.get("has_plural")
+    # has_article = request.args.get("has_article")
+    # has_time_limit = request.args.get("has_time_limit")
+    # time_limit = request.args.get("time_limit")
 
     settings_info = {
         "num_questions": num_questions,
-        "selected_lectures": selected_lessons,
-        "has_definition": has_definition,
-        "has_plural": has_plural,
-        "has_article": has_article,
-        "has_time_limit": has_time_limit,
-        "time_limit": time_limit
+        # "has_definition": has_definition,
+        # "has_plural": has_plural,
+        # "has_article": has_article,
+        # "has_time_limit": has_time_limit,
+        # "time_limit": time_limit
     }
 
     return settings_info

@@ -12,9 +12,11 @@ from . import utils
 def show_list():
     if not current_user.is_authenticated:
         return redirect(url_for('auth.register'))
+    
+    practices = utils.practices
     lessons = utils.get_lessons()
 
-    return render_template('list.html', practices=utils.practices, lessons=lessons)
+    return render_template('list.html', practices=practices, lessons=lessons)
 
 @practice.route('/start/')
 def start():
@@ -23,29 +25,17 @@ def start():
     selected_lessons = request.args.getlist("lessons")
     settings_info = utils.get_settings_info_from_request(request)
 
-    # check practice type (e.g. article, definition, plural)
     if practice_type not in PRACTICE_STRATEGIES:
         return "Invalid Practice Type", 400
     
     practice_strategy = PRACTICE_STRATEGIES.get(practice_type)
     practice_strategy.create()
-    
-    if selected_lessons:
-        lesson_ids = [int(lesson_id) for lesson_id in selected_lessons]
-        words = Word.query.filter(Word.lesson.in_(lesson_ids)).all()
-    else:
-        words = Word.query.all()
-    
-    if len(words) == 0:
-        return "No words found in that lecture", 400
-    selected = random.sample(words, min(num_questions, len(words)))
 
-    session['quiz_type'] = quiz_type
-    session['quiz_words'] = [word.id for word in selected]
+    session['practice_type'] = quiz_type
     session['current_idx'] = 0
     session['score'] = 0
 
-    return redirect(url_for("quiz.show"))
+    return redirect(url_for("practice.show"))
 
 @practice.route('/quiz/')
 def show():
