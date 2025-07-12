@@ -9,6 +9,7 @@ practices = [
 
 def get_lessons():
     lesson_ids = get_lesson_ids()
+    print(lesson_ids)
     return [{"id": lesson_id, "name": f"Lecture {lesson_id}"} for lesson_id in lesson_ids]
 
 

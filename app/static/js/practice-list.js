@@ -1,48 +1,48 @@
-// Global variables to store current quiz selection
-let selectedQuizType = '';
-let selectedQuizName = '';
-let lessons = []; // This will be populated from the template
+let selectedType = '';
+let selectedTitle = '';
+let lessons = []; 
 
-function initializeQuizSelection(lessonsData) {
+function initialPracticeSelection(lessonsData) {
     lessons = lessonsData;
 }
 
-function selectQuiz(quizType, quizName) {
-    openLectureModal(quizType, quizName);
+function selectPractice(type, title) {
+    console.log("in selectPractice");
+    openModal(type, title);
 }
 
-function openLectureModal(quizType, quizName) {
-    selectedQuizType = quizType;
-    selectedQuizName = quizName;
-    document.getElementById('modalTitle').textContent = quizName;
+function openModal(type, title) {
+    selectedType = type;
+    selectedTitle = title;
+    document.getElementById('modalTitle').textContent = title;
             
-    const lectureOptionsContainer = document.getElementById('lectureOptions');
-    lectureOptionsContainer.innerHTML = '';
+    const lessonOptionsContainer = document.getElementById('lessonOptions');
+    lessonOptionsContainer.innerHTML = '';
             
-    lectures.forEach(lecture => {
+    lessons.forEach(lesson => {
         const optionDiv = document.createElement('div');
         optionDiv.className = 'lecture-option';
                 
         optionDiv.innerHTML = `
-        <input type="checkbox" id="lecture-${lecture.id}" class="lecture-checkbox" onchange="updateStartButton()">
-        <label for="lecture-${lecture.id}" class="lecture-label">
+        <input type="checkbox" id="lecture-${lesson.id}" class="lecture-checkbox" onchange="updateStartButton()">
+        <label for="lecture-${lesson.id}" class="lecture-label">
             <div class="lecture-checkbox-icon"></div>
             <div class="lecture-info">
-                <div class="lecture-name">${lecture.name}</div>
-                ${lecture.description ? `<div class="lecture-description">${lecture.description}</div>` : ''}
+                <div class="lecture-name">${lesson.name}</div>
+                ${lesson.description ? `<div class="lecture-description">${lesson.description}</div>` : ''}
             </div>
         </label>
         `;
                 
-        lectureOptionsContainer.appendChild(optionDiv);
+        lessonOptionsContainer.appendChild(optionDiv);
     });
             
-    document.getElementById('lectureModal').classList.add('active');
+    document.getElementById('lessonModal').classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
-function closeLectureModal() {
-    document.getElementById('lectureModal').classList.remove('active');
+function closeModal() {
+    document.getElementById('lessonModal').classList.remove('active');
     document.body.style.overflow = '';
 
     setTimeout(() => {
@@ -64,11 +64,11 @@ function toggleSelectAll() {
 }
 
 function updateStartButton() {
-    const checkedLectures = document.querySelectorAll('.lecture-checkbox:checked');
-    const startBtn = document.getElementById('startQuizBtn');
-    startBtn.textContent = `Start Quiz`;
+    const checkedLessons = document.querySelectorAll('.lecture-checkbox:checked');
+    const startBtn = document.getElementById('startPracticeBtn');
+    startBtn.textContent = `Start Practice`;
         
-    if (checkedLectures.length > 0) {
+    if (checkedLessons.length > 0) {
         startBtn.disabled = false;
     } else {
         startBtn.disabled = true;
@@ -77,10 +77,10 @@ function updateStartButton() {
     const selectAllCheckbox = document.getElementById('selectAll');
     const totalLectures = document.querySelectorAll('.lecture-checkbox').length;
         
-    if (checkedLectures.length === 0) {
+    if (checkedLessons.length === 0) {
         selectAllCheckbox.indeterminate = false;
         selectAllCheckbox.checked = false;
-    } else if (checkedLectures.length === totalLectures) {
+    } else if (checkedLessons.length === totalLectures) {
         selectAllCheckbox.indeterminate = false;
         selectAllCheckbox.checked = true;
     } else {
@@ -88,28 +88,28 @@ function updateStartButton() {
     }
 }
 
-function startQuizWithLectures() {
-    console.log("Starting quiz with lectures...");
+function startPractice() {
+    console.log("Starting practice...");
     
-    const selectedLectures = Array.from(document.querySelectorAll('.lecture-checkbox:checked'))
+    const selectedLessons = Array.from(document.querySelectorAll('.lecture-checkbox:checked'))
         .map(cb => cb.id.replace('lecture-', ''));
     const numQuestions = document.getElementById('modalNumQuestions').value;
         
-    if (selectedLectures.length === 0) {
+    if (selectedLessons.length === 0) {
         alert('Please select at least one lecture.');
         return;
     }
         
     // Build URL with selected lectures
-    const lectureParams = selectedLectures.map(id => `lectures=${id}`).join('&');
-    const url = `/start/?quiz_type=${selectedQuizType}&num_questions=${numQuestions}&${lectureParams}`;
+    const lessonParams = selectedLessons.map(id => `lessons=${id}`).join('&');
+    const url = `/start/?practice_type=${selectedType}&num_questions=${numQuestions}&${lessonParams}`;
         
-    console.log('Starting quiz with URL:', url);
-    console.log('Selected quiz type:', selectedQuizType);
-    console.log('Selected lectures:', selectedLectures);
+    console.log('Starting practice with URL:', url);
+    console.log('Selected practice type:', selectedType);
+    console.log('Selected lessons:', selectedLessons);
     
     window.location.href = url;
-    closeLectureModal();
+    closeModal();
 }
 
 // Initialize event listeners when DOM is loaded
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (modal) {
         modal.addEventListener('click', function(e) {
             if (e.target == this) {
-                closeLectureModal();
+                closeModal();
             }
         });
     }
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Close modal with Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key == 'Escape' && document.getElementById("lectureModal").classList.contains('active')) {
-            closeLectureModal();
+            closeModal();
         }
     });
 });

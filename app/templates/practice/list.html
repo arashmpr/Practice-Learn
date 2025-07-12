@@ -21,7 +21,7 @@
     <div class="quiz-selection">
         <div class="quiz-options">
             {% for practice in practices %}
-            <div class="quiz-option-card" onclick="selectQuiz('{{ practice.key }}', '{{ practice.title }}')">
+            <div class="quiz-option-card" onclick="selectPractice('{{ practice.key }}', '{{ practice.title }}')">
                 <h3 class="quiz-option-title">{{ practice.title }}</h3>
                 <p class="quiz-option-description">{{ practice.description }}</p>
             </div>
@@ -31,12 +31,12 @@
 </section>
 
 <!-- Modal Overlay -->
-<div class="modal-overlay" id="lectureModal">
+<div class="modal-overlay" id="lessonModal">
     <div class="modal">
-        <button class="close-btn" onclick="closeLectureModal()">&times;</button>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
             
         <div class="modal-header">
-            <h2 class="modal-title" id="modalTitle">Article Practice</h2>
+            <h2 class="modal-title" id="modalTitle">Practice Title</h2>
             <p class="modal-subtitle">Select the lectures you want to practice</p>
         </div>
 
@@ -48,7 +48,7 @@
                 </label>
             </div>
 
-            <div class="lecture-options" id="lectureOptions">
+            <div class="lecture-options" id="lessonOptions">
                
             </div>
         </div>
@@ -68,8 +68,8 @@
         </div>
 
         <div class="modal-actions">
-            <button class="btn btn-secondary" onclick="closeLectureModal()">Cancel</button>
-            <button class="btn btn-primary" id="startQuizBtn" onclick="startQuizWithLectures()" disabled>Start Quiz</button>
+            <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" id="startPracticeBtn" onclick="startPractice()" disabled>Start Practice</button>
         </div>
     </div>
 </div>
@@ -79,7 +79,7 @@
 <script src="{{ url_for('static', filename='js/practice-list.js') }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        initializeQuizSelection({ lessons,tojson,safe });
+        initialPracticeSelection({{ lessons | tojson | safe }});
     });
 </script>
 {% endblock %}
