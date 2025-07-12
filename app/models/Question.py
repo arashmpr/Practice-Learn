@@ -2,28 +2,11 @@ from app.db import db
 from datetime import datetime, timezone
 from sqlalchemy import Column, Integer, String, Text, UniqueConstraint
 
-class Question(db.Model):
-    __tablename__ = 'questions'
-
-    id = Column(Integer, primary_key=True)
-    question_type = Column(String(64), nullable=False)
-    answer_type = Column(String(64), nullable=False)
-    question_text = Column(String(256), nullable=False)
-
-    lesson = Column(Integer, nullable=False)
-    
-
-    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
-
-    __mapper_args = {
-        'polymorphic_identity': 'question',
-        'polymorphic_on': question_type
-    }
-
 class SingleChoiceQuestion(db.Model):
     __tablename__ = 'single_choice_question'
 
     id = Column(Integer, primary_key=True)
+    word_id = Column(Integer)
 
     tag = Column(String(32), nullable=False)
     question_type = Column(String(64), default='single_choice_question', nullable=False)
@@ -32,18 +15,17 @@ class SingleChoiceQuestion(db.Model):
     options = Column(db.JSON, nullable=False)
     correct_answer = Column(Text, nullable=False)
 
-    definition = Column(String(32))
-    plural = Column(String(32))
-    lesson = Column(Integer, nullable=False)
-
+    lesson = Column(Integer)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     __table_args__ = (
-        UniqueConstraint('tag', 'question_type', 'question_text', 'lesson', name='uq_questions_sc_fields'),
+        UniqueConstraint('tag', 'question_type', 'word_id', 'lesson', name='uq_word_questions_sc_fields'),
     )
 
 class TextBoxQuestion(db.Model):
     __tablename__ = 'text_box_question'
 
     id = Column(Integer, primary_key=True)
+    word_id = Column(Integer)
 
     tag = Column(String(32), nullable=False)
     question_type = Column(String(32), default='text_box_question', nullable='False')
@@ -51,12 +33,11 @@ class TextBoxQuestion(db.Model):
 
     correct_answer = Column(Text, nullable=False)
 
-    definition = Column(Text)
-    plural = Column(Text)
-    lesson = Column(Integer, nullable=False)
+    lesson = Column(Integer)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
     __table_args__ = (
-        UniqueConstraint('tag', 'question_type', 'question_text', 'lesson', name='uq_questions_tb_fields'),
+        UniqueConstraint('tag', 'question_type', 'word_id', 'lesson', name='uq_word_questions_tb_fields'),
     )
 
 

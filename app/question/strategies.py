@@ -15,11 +15,10 @@ class ArticleTextBoxQuestions(Questions):
         for word in words:
             question = {
                 'tag': 'article',
+                'word_id': word.id,
                 'question_type': 'text_box_question',
                 'question_text': word.word,
                 'correct_answer': word.article,
-                'definition': word.definition,
-                'plural': word.plural,
                 'lesson': word.lesson,
                 }
             questions.append(question)
@@ -27,11 +26,8 @@ class ArticleTextBoxQuestions(Questions):
             
     def process(self, words):
         values = self.generate_values(words)
-        constraint = 'uq_questions_tb_fields'
+        constraint = 'uq_word_questions_tb_fields'
         q_db.bulk_insert(TextBoxQuestion, values, constraint)
-
-
-
 
 class ArticleSingleChoiceQuestions(Questions):
     def generate_values(self, words):
@@ -41,12 +37,11 @@ class ArticleSingleChoiceQuestions(Questions):
         for word in words:
             question = {
                 'tag': 'article',
+                'word_id': word.id,
                 'question_type': 'single_box_question',
                 'question_text': word.word,
                 'options': options,
                 'correct_answer': word.article,
-                'definition': word.definition,
-                'plural': word.plural,
                 'lesson': word.lesson,
                 }
             questions.append(question)
@@ -54,9 +49,8 @@ class ArticleSingleChoiceQuestions(Questions):
     
     def process(self, words):
         values = self.generate_values(words)
-        constraint = 'uq_questions_sc_fields'
+        constraint = 'uq_word_questions_sc_fields'
         q_db.bulk_insert(SingleChoiceQuestion, values, constraint)
-
 
 class PluralTextBoxQuestions(Questions):
     def generate_values(self, words):
@@ -64,10 +58,10 @@ class PluralTextBoxQuestions(Questions):
         for word in words:
             question = {
                 'tag': 'plural',
+                'word_id': word.id,
                 'question_type': 'text_box_question',
                 'question_text': word.word,
                 'correct_answer': word.plural,
-                'definition': word.definition,
                 'lesson': word.lesson,
                 }
             questions.append(question)
@@ -75,7 +69,7 @@ class PluralTextBoxQuestions(Questions):
             
     def process(self, words):
         values = self.generate_values(words)
-        constraint = 'uq_questions_tb_fields'
+        constraint = 'uq_word_questions_tb_fields'
         q_db.bulk_insert(TextBoxQuestion, values, constraint)
 
 class DefinitonTextBoxQuestions(Questions):
@@ -84,10 +78,10 @@ class DefinitonTextBoxQuestions(Questions):
         for word in words:
             question = {
                 'tag': 'definition',
+                'word_id': word.id,
                 'question_type': 'text_box_question',
                 'question_text': word.word,
                 'correct_answer': word.definition,
-                'plural': word.plural,
                 'lesson': word.lesson,
                 }
             questions.append(question)
@@ -95,6 +89,6 @@ class DefinitonTextBoxQuestions(Questions):
             
     def process(self, words):
         values = self.generate_values(words)
-        constraint = 'uq_questions_tb_fields'
+        constraint = 'uq_word_questions_tb_fields'
         q_db.bulk_insert(TextBoxQuestion, values, constraint)
 

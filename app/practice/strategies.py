@@ -1,6 +1,6 @@
 from flask import render_template
 from app.models.Word import Word
-from app.models.Question import Question, SingleChoiceQuestion
+from app.models.Question import SingleChoiceQuestion
 
 class PracticeQuestions:
     def generate(self, lessons):
