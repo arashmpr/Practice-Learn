@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, session
 from flask_login import current_user
 from app.models.Word import Word
-from app.practice.strategies import PRACTICE_STRATEGIES
+from app.blueprints.practice.strategies import PRACTICE_STRATEGIES
 import random
 from ..practice import practice
 from app.extensions import csrf

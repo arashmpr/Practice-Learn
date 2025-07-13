@@ -2,12 +2,8 @@ from flask import Flask, render_template
 from dotenv import load_dotenv
 
 from app.config import Config
-from app.extensions import db, bcrypt, csrf, login_manager
-
-from app.services.word_service import WordService
-
-# from app.word import insert_words
-# from app.question import generate_question_bank
+from app.db import db, init_db
+from app.extensions import bcrypt, csrf, login_manager
 
 def register_blueprints(app):
     from app.blueprints.auth import auth
@@ -36,49 +32,26 @@ def init_extensions(app):
     csrf.init_app(app)
     login_manager.init_app(app)
 
-def init_db():
-    db.create_all()
-    print("Database tables created successfully.")
+def configure_login():
+    login_manager.login_view = 'auth.login'
+    login_manager.login_message = 'Please log in to access this page.'
+    login_manager.login_message_category = 'info'
 
-    WordService.insert_words_into_db()
-    print("Words inserted into database successfully.")
-
-    print("Database initialized successfully.")
-
-
-# def init_database():
-#     """Initialize database with default data"""
-#     db.create_all()
-#     insert_words('data/words.csv')
-#     print("Words inserted successfully")
-#     generate_question_bank()
-#     print("Question bank generated successfully")
-
-def create_app(init_db=True):
+def create_app(initialize_db=True):
 
     load_dotenv()
 
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # init_extensions(app)
-
-    db.init_app(app)
-    bcrypt.init_app(app)
-    csrf.init_app(app)
-    login_manager.init_app(app)
-    
-    # Configure Flask-Login
-    login_manager.login_view = 'auth.login'
-    login_manager.login_message = 'Please log in to access this page.'
-    login_manager.login_message_category = 'info'
+    init_extensions(app)
+    configure_login()    
 
     with app.app_context():
         register_blueprints(app)
         register_error_handlers(app)
         
-        # Only initialize database if requested
-        if init_db:
+        if initialize_db:
             init_db()
         
     return app

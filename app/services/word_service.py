@@ -1,8 +1,5 @@
 import csv
 from app.config import Config
-from app.db import db
-from sqlalchemy.dialects.postgresql import insert
-
 from app.repositories.word_repository import WordRepository
 
 config = Config()
@@ -18,7 +15,7 @@ class WordService():
         values = []
         filepath = config.WORDS_FILEPATH
         with open(filepath, newline='', encoding='utf-8') as f:   
-            reader = csv.DictReader()
+            reader = csv.DictReader(f)
             for line in reader:
                 value = {
                     'word': line['word'],
