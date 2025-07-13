@@ -101,17 +101,5 @@
   document.addEventListener('DOMContentLoaded', function () {
     initialPracticeSelection({{ lessons | tojson | safe }});
   });
-
-  function openModal() {
-    const modal = document.getElementById('lessonModal');
-    modal.classList.add('visible', 'opacity-100');
-    modal.classList.remove('invisible', 'opacity-0');
-  }
-
-  function closeModal() {
-    const modal = document.getElementById('lessonModal');
-    modal.classList.add('opacity-0', 'invisible');
-    modal.classList.remove('visible', 'opacity-100');
-  }
 </script>
 {% endblock %}

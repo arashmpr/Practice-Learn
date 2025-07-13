@@ -15,6 +15,9 @@ function openModal(type, title) {
     selectedType = type;
     selectedTitle = title;
     document.getElementById('modalTitle').textContent = title;
+    const modal = document.getElementById('lessonModal')
+    modal.classList.add('visible', 'opacity-100');
+    modal.classList.remove('invisible', 'opacity-0');
             
     const lessonOptionsContainer = document.getElementById('lessonOptions');
     lessonOptionsContainer.innerHTML = '';
@@ -42,7 +45,10 @@ function openModal(type, title) {
 }
 
 function closeModal() {
-    document.getElementById('lessonModal').classList.remove('active');
+    const modal = document.getElementById('lessonModal')
+    modal.classList.remove('active');
+    modal.classList.add('invisible', 'opacity-0');
+    modal.classList.remove('visible', 'opacity-100');
     document.body.style.overflow = '';
 
     setTimeout(() => {
@@ -114,7 +120,6 @@ function startPractice() {
 
 // Initialize event listeners when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Close modal when clicking outside
     const modal = document.getElementById("lectureModal");
     if (modal) {
         modal.addEventListener('click', function(e) {
@@ -123,8 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    // Close modal with Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key == 'Escape' && document.getElementById("lectureModal").classList.contains('active')) {
             closeModal();
