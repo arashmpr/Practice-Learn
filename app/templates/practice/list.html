@@ -2,84 +2,116 @@
 
 {% block title %}Choose Your Practice{% endblock %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/practice.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/modal-practice.css') }}">
-{% endblock %}
-
 {% block content %}
-<div class="page-header">
-    <div class="container">
-        <div class="page-header-content">
-            <h1 class="page-title">Choose Your Practice</h1>
-            <p class="page-subtitle">Test your German language skills with our interactive practices</p>
-        </div>
-    </div>
+<!-- Header -->
+<div class="bg-gradient-to-br from-white to-red-50 py-14 border-b border-gray-200">
+  <div class="max-w-[1200px] mx-auto px-4 text-center">
+    <h1 class="text-5xl font-extrabold text-gray-800 mb-3 tracking-tight">Choose Your Practice</h1>
+    <p class="text-lg text-gray-600">Sharpen your German with interactive challenges 🚀</p>
+  </div>
 </div>
 
-<section class="container">
-    <div class="quiz-selection">
-        <div class="quiz-options">
-            {% for practice in practices %}
-            <div class="quiz-option-card" onclick="selectPractice('{{ practice.key }}', '{{ practice.title }}')">
-                <h3 class="quiz-option-title">{{ practice.title }}</h3>
-                <p class="quiz-option-description">{{ practice.description }}</p>
-            </div>
-            {% endfor %}
-        </div>
+<!-- Practice Cards -->
+<section class="max-w-[1200px] mx-auto px-4 py-16">
+  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    {% for practice in practices %}
+    <div
+      class="relative bg-white bg-opacity-80 backdrop-blur-md border border-gray-200 p-6 rounded-2xl shadow-xl hover:shadow-2xl transform transition-all duration-300 hover:-translate-y-2 hover:border-red-400 cursor-pointer group"
+      onclick="selectPractice('{{ practice.key }}', '{{ practice.title }}')">
+
+      <!-- Fancy Top Border -->
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-400 to-pink-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 rounded-t-xl"></div>
+
+      <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-red-700 transition">
+        {{ practice.title }}
+      </h3>
+      <p class="text-gray-500 mb-6 text-sm leading-relaxed">{{ practice.description }}</p>
+
+      <button
+        class="inline-flex justify-center items-center bg-red-600 text-white text-sm font-semibold px-5 py-2 rounded-lg shadow hover:bg-red-700 transition-all duration-200">
+        Start Practice
+      </button>
     </div>
+    {% endfor %}
+  </div>
 </section>
 
-<!-- Modal Overlay -->
-<div class="modal-overlay" id="lessonModal">
-    <div class="modal">
-        <button class="close-btn" onclick="closeModal()">&times;</button>
-            
-        <div class="modal-header">
-            <h2 class="modal-title" id="modalTitle">Practice Title</h2>
-            <p class="modal-subtitle">Select the lectures you want to practice</p>
-        </div>
+<!-- Modal -->
+<div id="lessonModal"
+     class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 invisible opacity-0 transition-opacity duration-300">
+  <div
+    class="bg-white rounded-2xl shadow-2xl w-[90%] max-w-xl max-h-[85vh] overflow-y-auto p-6 transform scale-95 translate-y-5 transition-transform duration-300 modal-content relative">
 
-        <div class="lecture-selection">
-            <div class="select-all-option">
-                <label class="select-all-label">
-                    <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
-                    <span>Select All Lectures</span>
-                </label>
-            </div>
+    <!-- Close -->
+    <button onclick="closeModal()"
+            class="absolute top-3 right-3 text-gray-400 hover:text-red-500 text-2xl transition">&times;</button>
 
-            <div class="lecture-options" id="lessonOptions">
-               
-            </div>
-        </div>
-
-        <div class="quiz-settings-section">
-            <h3 class="settings-title">Settings</h3>
-                
-            <div class="settings-group">
-                <label class="settings-label" for="modalNumQuestions">Number of Questions</label>
-                <select class="settings-select" id="modalNumQuestions">
-                    <option value="5">5 Questions</option>
-                    <option value="10" selected>10 Questions</option>
-                    <option value="15">15 Questions</option>
-                    <option value="20">20 Questions</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="modal-actions">
-            <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-            <button class="btn btn-primary" id="startPracticeBtn" onclick="startPractice()" disabled>Start Practice</button>
-        </div>
+    <!-- Modal Header -->
+    <div class="text-center mb-6 border-b pb-4">
+      <h2 id="modalTitle" class="text-2xl font-bold text-gray-800 mb-1">Practice Title</h2>
+      <p class="text-sm text-gray-500">Select the lectures you want to practice</p>
     </div>
+
+    <!-- Select All -->
+    <div class="mb-4 border-b pb-3">
+      <label class="flex items-center gap-2 text-red-600 font-medium cursor-pointer">
+        <input type="checkbox" id="selectAll" onchange="toggleSelectAll()" class="rounded">
+        <span>Select All Lectures</span>
+      </label>
+    </div>
+
+    <!-- Lecture Options -->
+    <div id="lessonOptions" class="flex flex-col gap-3 mb-6">
+      <!-- Filled dynamically -->
+    </div>
+
+    <!-- Settings -->
+    <div class="mb-6 border-t pt-4">
+      <h3 class="font-medium text-gray-800 mb-3">Settings</h3>
+      <div>
+        <label for="modalNumQuestions" class="block text-sm font-medium text-gray-700 mb-1">Number of Questions</label>
+        <select id="modalNumQuestions"
+                class="w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-800 bg-white">
+          <option value="5">5 Questions</option>
+          <option value="10" selected>10 Questions</option>
+          <option value="15">15 Questions</option>
+          <option value="20">20 Questions</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="flex justify-end gap-3">
+      <button onclick="closeModal()"
+              class="px-5 py-2 text-sm rounded bg-gray-100 text-gray-600 hover:bg-gray-200 transition">
+        Cancel
+      </button>
+      <button onclick="startPractice()" id="startPracticeBtn" disabled
+              class="px-5 py-2 text-sm rounded bg-red-600 text-white hover:bg-red-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition">
+        Start Practice
+      </button>
+    </div>
+  </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script src="{{ url_for('static', filename='js/practice-list.js') }}"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        initialPracticeSelection({{ lessons | tojson | safe }});
-    });
+  document.addEventListener('DOMContentLoaded', function () {
+    initialPracticeSelection({{ lessons | tojson | safe }});
+  });
+
+  function openModal() {
+    const modal = document.getElementById('lessonModal');
+    modal.classList.add('visible', 'opacity-100');
+    modal.classList.remove('invisible', 'opacity-0');
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('lessonModal');
+    modal.classList.add('opacity-0', 'invisible');
+    modal.classList.remove('visible', 'opacity-100');
+  }
 </script>
 {% endblock %}
