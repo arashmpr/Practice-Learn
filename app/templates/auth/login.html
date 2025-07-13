@@ -65,15 +65,6 @@
 </div>
 {% endblock %}
 
-{% block scripts %}
-<script>
-    // Auto-update UTC timestamp every second
-    function updateTimestamp() {
-        const now = new Date();
-        const timestamp = now.toISOString().replace('T', ' ').slice(0, 19);
-        document.querySelector('.auth-timestamp').textContent = 'UTC: ' + timestamp;
-    }
-    setInterval(updateTimestamp, 1000);
-    updateTimestamp();
-</script>
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/auth-login.js') }}"></script>
 {% endblock %}
