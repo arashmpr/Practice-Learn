@@ -1,11 +1,8 @@
 from flask import Flask, render_template
 from dotenv import load_dotenv
-import os
 
-from app.main import main
-from app.practice import practice
-from app.auth import auth
-from app.user import user
+from app.config import Config
+from app.extensions import db, bcrypt, csrf, login_manager
 
 from app.word import insert_words
 from app.question import generate_question_bank
@@ -15,6 +12,11 @@ from app.extensions import bcrypt, csrf, login_manager
 from flask_login import LoginManager
 
 def register_blueprints(app):
+    from app.blueprints.auth import auth
+    from app.blueprints.main import main
+    from app.blueprints.practice import practice
+    from app.blueprints.user import user
+
     app.register_blueprint(main)
     app.register_blueprint(auth)
     app.register_blueprint(user)
