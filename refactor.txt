@@ -1,0 +1,101 @@
+project_root/
+├── app/
+│   ├── __init__.py
+│   ├── config.py
+│   ├── extensions.py
+│   ├── db.py
+│   │
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── User.py
+│   │   ├── Word.py
+│   │   ├── Question.py
+│   │   ├── Practice.py
+│   │   ├── PracticeSession.py
+│   │   └── PracticeResult.py
+│   │
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── practice_service.py
+│   │   ├── question_service.py
+│   │   ├── user_service.py
+│   │   └── analytics_service.py
+│   │
+│   ├── repositories/
+│   │   ├── __init__.py
+│   │   ├── practice_repository.py
+│   │   ├── question_repository.py
+│   │   └── user_repository.py
+│   │
+│   ├── blueprints/
+│   │   ├── __init__.py
+│   │   │
+│   │   ├── auth/
+│   │   │   ├── __init__.py
+│   │   │   ├── routes.py
+│   │   │   └── forms.py
+│   │   │
+│   │   ├── practice/
+│   │   │   ├── __init__.py
+│   │   │   ├── routes.py
+│   │   │   ├── forms.py
+│   │   │   └── utils.py
+│   │   │
+│   │   ├── user/
+│   │   │   ├── __init__.py
+│   │   │   ├── routes.py
+│   │   │   └── forms.py
+│   │   │
+│   │   └── main/
+│   │       ├── __init__.py
+│   │       └── routes.py
+│   │
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   ├── decorators.py
+│   │   ├── validators.py
+│   │   ├── helpers.py
+│   │   └── exceptions.py
+│   │
+│   ├── templates/
+│   │   ├── base.html
+│   │   ├── errors/
+│   │   │   ├── 404.html
+│   │   │   └── 500.html
+│   │   │
+│   │   ├── auth/
+│   │   │   ├── login.html
+│   │   │   └── register.html
+│   │   │
+│   │   ├── practice/
+│   │   │   ├── list.html
+│   │   │   ├── history.html
+│   │   │   ├── article-single-choice.html
+│   │   │   ├── article-text-input.html
+│   │   │   ├── plural-text-input.html
+│   │   │   ├── definition-text-input.html
+│   │   │   └── results.html
+│   │   │
+│   │   └── user/
+│   │       └── profile.html
+│   │
+│   ├── static/
+│   │   ├── css/
+│   │   ├── js/
+│   │   └── images/
+│   │
+│   └── cli/
+│       ├── __init__.py
+│       └── commands.py
+│
+├── data/
+│   └── words.csv
+│
+├── requirements.txt
+├── .env
+├── .env.example
+├── .gitignore
+├── config.py
+├── run.py
+├── drop_db.py
+└── README.md
