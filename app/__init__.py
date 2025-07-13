@@ -4,12 +4,10 @@ from dotenv import load_dotenv
 from app.config import Config
 from app.extensions import db, bcrypt, csrf, login_manager
 
-from app.word import insert_words
-from app.question import generate_question_bank
+from app.services.word_service import WordService
 
-from app.db import db
-from app.extensions import bcrypt, csrf, login_manager
-from flask_login import LoginManager
+# from app.word import insert_words
+# from app.question import generate_question_bank
 
 def register_blueprints(app):
     from app.blueprints.auth import auth
@@ -32,25 +30,39 @@ def register_error_handlers(app):
         db.session.rollback()
         return render_template('errors/500.html'), 500
 
-def init_database():
-    """Initialize database with default data"""
+def init_extensions(app):
+    db.init_app(app)
+    bcrypt.init_app(app)
+    csrf.init_app(app)
+    login_manager.init_app(app)
+
+def init_db():
     db.create_all()
-    insert_words('data/words.csv')
-    print("Words inserted successfully")
-    generate_question_bank()
-    print("Question bank generated successfully")
+    print("Database tables created successfully.")
+
+    WordService.insert_words_into_db()
+    print("Words inserted into database successfully.")
+
+    print("Database initialized successfully.")
+
+
+# def init_database():
+#     """Initialize database with default data"""
+#     db.create_all()
+#     insert_words('data/words.csv')
+#     print("Words inserted successfully")
+#     generate_question_bank()
+#     print("Question bank generated successfully")
 
 def create_app(init_db=True):
+
     load_dotenv()
 
     app = Flask(__name__)
-    
-    # Configuration
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    
-    # Initialize extensions
+    app.config.from_object(Config)
+
+    # init_extensions(app)
+
     db.init_app(app)
     bcrypt.init_app(app)
     csrf.init_app(app)
@@ -67,6 +79,6 @@ def create_app(init_db=True):
         
         # Only initialize database if requested
         if init_db:
-            init_database()
+            init_db()
         
     return app

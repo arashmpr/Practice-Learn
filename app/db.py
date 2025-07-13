@@ -1,3 +1,8 @@
-from flask_sqlalchemy import SQLAlchemy
+from app.extensions import db
+    
+def drop_db():
+    db.drop_all()
+    print("Database tables dropped successfully.")
 
-db = SQLAlchemy()
+def get_db():
+    return db
