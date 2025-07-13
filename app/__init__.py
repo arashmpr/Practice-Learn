@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from dotenv import load_dotenv
 
 from app.config import Config
-from app.db import db, init_db
+from app.db import db
 from app.extensions import bcrypt, csrf, login_manager
 
 def register_blueprints(app):
@@ -26,6 +26,11 @@ def register_error_handlers(app):
         db.session.rollback()
         return render_template('errors/500.html'), 500
 
+def register_cli_commands(app):
+    from app.cli import init_db, drop_db
+    app.cli.add_command(init_db)
+    app.cli.add_command(drop_db)
+
 def init_extensions(app):
     db.init_app(app)
     bcrypt.init_app(app)
@@ -37,7 +42,7 @@ def configure_login():
     login_manager.login_message = 'Please log in to access this page.'
     login_manager.login_message_category = 'info'
 
-def create_app(initialize_db=True):
+def create_app():
 
     load_dotenv()
 
@@ -46,12 +51,10 @@ def create_app(initialize_db=True):
 
     init_extensions(app)
     configure_login()    
+    register_cli_commands(app)
 
     with app.app_context():
         register_blueprints(app)
         register_error_handlers(app)
-        
-        if initialize_db:
-            init_db()
         
     return app
