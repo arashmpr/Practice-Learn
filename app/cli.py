@@ -1,7 +1,7 @@
 import click 
 from flask.cli import with_appcontext
 from app.db import db
-from app.services.word_service import WordService
+from app.services import WordService, QuestionService
 
 @click.command('init-db')
 @with_appcontext
@@ -11,6 +11,9 @@ def init_db():
 
     WordService.insert_words_into_db()
     click.echo('Words inserted into database.')
+
+    QuestionService.insert_questions_into_db()
+    click.echo('Questions inserted into database')
 
     click.echo('Database initialized successfully.')
 

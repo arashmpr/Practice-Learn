@@ -1,12 +1,12 @@
 from app.db import db
-from app.question import db as q_db
+from app.repositories.question_repository import QuestionRepository
 from app.models.Question import SingleChoiceQuestion, TextBoxQuestion
 
 class Questions:
     def generate_values(self):
         raise NotImplementedError
     
-    def process(self):
+    def bulk_insert(self):
         raise NotImplementedError
 
 class ArticleTextBoxQuestions(Questions):
@@ -24,10 +24,10 @@ class ArticleTextBoxQuestions(Questions):
             questions.append(question)
         return questions
             
-    def process(self, words):
+    def bulk_insert(self, words):
         values = self.generate_values(words)
         constraint = 'uq_word_questions_tb_fields'
-        q_db.bulk_insert(TextBoxQuestion, values, constraint)
+        QuestionRepository.bulk_insert(TextBoxQuestion, values, constraint)
 
 class ArticleSingleChoiceQuestions(Questions):
     def generate_values(self, words):
@@ -47,10 +47,10 @@ class ArticleSingleChoiceQuestions(Questions):
             questions.append(question)
         return questions
     
-    def process(self, words):
+    def bulk_insert(self, words):
         values = self.generate_values(words)
         constraint = 'uq_word_questions_sc_fields'
-        q_db.bulk_insert(SingleChoiceQuestion, values, constraint)
+        QuestionRepository.bulk_insert(SingleChoiceQuestion, values, constraint)
 
 class PluralTextBoxQuestions(Questions):
     def generate_values(self, words):
@@ -67,10 +67,10 @@ class PluralTextBoxQuestions(Questions):
             questions.append(question)
         return questions
             
-    def process(self, words):
+    def bulk_insert(self, words):
         values = self.generate_values(words)
         constraint = 'uq_word_questions_tb_fields'
-        q_db.bulk_insert(TextBoxQuestion, values, constraint)
+        QuestionRepository.bulk_insert(TextBoxQuestion, values, constraint)
 
 class DefinitonTextBoxQuestions(Questions):
     def generate_values(self, words):
@@ -87,8 +87,8 @@ class DefinitonTextBoxQuestions(Questions):
             questions.append(question)
         return questions
             
-    def process(self, words):
+    def bulk_insert(self, words):
         values = self.generate_values(words)
         constraint = 'uq_word_questions_tb_fields'
-        q_db.bulk_insert(TextBoxQuestion, values, constraint)
+        QuestionRepository.bulk_insert(TextBoxQuestion, values, constraint)
 

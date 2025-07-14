@@ -16,5 +16,5 @@ class Config:
 
     # Application settings
     DEFAULT_QUESTIONS_PER_PRACTICE = int(os.getenv('QUESTIONS_PER_PRACTICE', '10'))
-    DEFAULT_MAX_PRACTICE_TIME = int(os.getenv('DEFAULT_MAX_PRACTICE_TIME', '1800')) # 30 minutes
+    DEFAULT_MAX_PRACTICE_TIME = int(os.getenv('DEFAULT_MAX_PRACTICE_TIME', '1800'))
     WORDS_FILEPATH = 'data/words.csv'

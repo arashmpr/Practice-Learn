@@ -9,3 +9,8 @@ class WordRepository():
         stmt = stmt.on_conflict_do_nothing(constraint='uq_word_fields')
         db.session.execute(stmt)
         db.session.commit()
+    
+    @staticmethod
+    def get_all():
+        words = Word.query.all()
+        return words
