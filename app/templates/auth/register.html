@@ -1,60 +1,64 @@
 {% extends "base.html" %}
-{% block title %}Register - Practice-Learn{% endblock %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
-{% endblock %}
+{% block title %}Register - Practice & Learn{% endblock %}
 
 {% block content %}
-<div class="auth-container">
-    <div class="auth-card">
-        <div class="auth-header">
-            <h1 class="auth-title">Create Account</h1>
-            <p class="auth-subtitle">Join Practice & Learn</p>
-        </div>
-        
-        <form class="auth-form" method="POST">
-            {{ form.csrf_token }}
-            
-            <div class="form-group">
-                {{ form.username.label(class="form-label") }}
-                {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else "")) }}
-                {% if form.username.errors %}
-                    {% for error in form.username.errors %}
-                        <div class="invalid-feedback">{{ error }}</div>
-                    {% endfor %}
-                {% endif %}
-            </div>
+<div class="max-w-md w-full mx-auto mt-20 px-4">
+  <div class="bg-white shadow-xl rounded-3xl p-8 border border-gray-200">
 
-            <div class="form-group">
-                {{ form.password.label(class="form-label") }}
-                {{ form.password(class="form-control" + (" is-invalid" if form.password.errors else "")) }}
-                {% if form.password.errors %}
-                    {% for error in form.password.errors %}
-                        <div class="invalid-feedback">{{ error }}</div>
-                    {% endfor %}
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                {{ form.confirm.label(class="form-label") }}
-                {{ form.confirm(class="form-control" + (" is-invalid" if form.confirm.errors else "")) }}
-                {% if form.confirm.errors %}
-                    {% for error in form.confirm.errors %}
-                        <div class="invalid-feedback">{{ error }}</div>
-                    {% endfor %}
-                {% endif %}
-            </div>
-
-            {{ form.submit(class="btn-submit") }}
-        </form>
-
-        <div class="auth-footer">
-            <p class="auth-footer-text">
-                Already have an account? 
-                <a href="{{ url_for('auth.login') }}" class="auth-footer-link">Login</a>
-            </p>
-        </div>
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">Create Account</h1>
+      <p class="text-gray-500">Join Practice & Learn</p>
     </div>
+
+    <!-- Form -->
+    <form method="POST" class="space-y-6">
+      {{ form.csrf_token }}
+
+      <!-- Username -->
+      <div>
+        {{ form.username.label(class="block text-sm font-medium text-gray-700 mb-1") }}
+        {{ form.username(class="w-full px-4 py-2 border rounded-lg shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent" + (" border-red-500" if form.username.errors else " border-gray-300")) }}
+        {% if form.username.errors %}
+          {% for error in form.username.errors %}
+            <p class="text-sm text-red-600 mt-1">{{ error }}</p>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <!-- Password -->
+      <div>
+        {{ form.password.label(class="block text-sm font-medium text-gray-700 mb-1") }}
+        {{ form.password(class="w-full px-4 py-2 border rounded-lg shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent" + (" border-red-500" if form.password.errors else " border-gray-300")) }}
+        {% if form.password.errors %}
+          {% for error in form.password.errors %}
+            <p class="text-sm text-red-600 mt-1">{{ error }}</p>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <!-- Confirm Password -->
+      <div>
+        {{ form.confirm.label(class="block text-sm font-medium text-gray-700 mb-1") }}
+        {{ form.confirm(class="w-full px-4 py-2 border rounded-lg shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent" + (" border-red-500" if form.confirm.errors else " border-gray-300")) }}
+        {% if form.confirm.errors %}
+          {% for error in form.confirm.errors %}
+            <p class="text-sm text-red-600 mt-1">{{ error }}</p>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        {{ form.submit(class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-200") }}
+      </div>
+    </form>
+
+    <!-- Footer -->
+    <div class="text-center mt-6 text-sm text-gray-600">
+      Already have an account?
+      <a href="{{ url_for('auth.login') }}" class="text-blue-600 hover:underline hover:text-blue-700 font-medium">Login</a>
+    </div>
+  </div>
 </div>
 {% endblock %}
