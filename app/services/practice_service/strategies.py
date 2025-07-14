@@ -1,15 +1,13 @@
 from flask import render_template
-from app.models.Word import Word
-from app.models.Question import SingleChoiceQuestion
 
-class PracticeQuestions:
+class PracticeStrategies:
     def generate(self, lessons):
         raise NotImplementedError
     
     def render_practice(self):
         raise NotImplementedError
 
-class ArticlePractice(PracticeQuestions):
+class ArticlePractice(PracticeStrategies):
     def generate(self, lessons, question_type):
         print("todo")
     def render_practice(self):

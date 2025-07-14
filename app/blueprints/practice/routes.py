@@ -1,11 +1,9 @@
 from flask import render_template, request, redirect, url_for, session
 from flask_login import current_user
 from app.models.Word import Word
-from app.blueprints.practice.strategies import PRACTICE_STRATEGIES
-import random
 from ..practice import practice
 from app.extensions import csrf
-from . import utils
+from app.services import PracticeService
 
 
 @practice.route('/list')
@@ -13,8 +11,10 @@ def show_list():
     if not current_user.is_authenticated:
         return redirect(url_for('auth.register'))
     
-    practices = utils.practices
-    lessons = utils.get_lessons()
+    practices = PracticeService.get_practices()
+    print("Got the practices")
+    lessons = PracticeService.get_lessons()
+    print("Got the lessons")
 
     return render_template('practice/list.html', practices=practices, lessons=lessons)
 
@@ -23,7 +23,7 @@ def start():
 
     practice_type = request.args.get("practice_type")
     selected_lessons = request.args.getlist("lessons")
-    settings_info = utils.get_settings_info_from_request(request)
+    total_questions = request.args("num_questions")
 
     if practice_type not in PRACTICE_STRATEGIES:
         return "Invalid Practice Type", 400
