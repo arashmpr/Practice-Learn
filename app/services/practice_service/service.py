@@ -42,5 +42,6 @@ class PracticeService():
             {'title': 'Plural Quiz', 'description': 'Type the plural form of each word', 'key': "plural"},
             {'title': 'Definition Quiz', 'description': 'Type the definition of each word', 'key': "definition"}
         ] 
+        return practices
 
     
