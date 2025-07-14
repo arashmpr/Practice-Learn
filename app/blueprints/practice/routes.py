@@ -16,7 +16,7 @@ def show_list():
     practices = utils.practices
     lessons = utils.get_lessons()
 
-    return render_template('list.html', practices=practices, lessons=lessons)
+    return render_template('practice/list.html', practices=practices, lessons=lessons)
 
 @practice.route('/start/')
 def start():
