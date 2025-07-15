@@ -15,10 +15,10 @@ class SingleChoiceQuestion(db.Model):
     options = Column(db.JSON, nullable=False)
     correct_answer = Column(Text, nullable=False)
 
-    lesson = Column(Integer)
+    lesson_id = Column(Integer)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     __table_args__ = (
-        UniqueConstraint('tag', 'question_type', 'word_id', 'lesson', name='uq_word_questions_sc_fields'),
+        UniqueConstraint('tag', 'question_type', 'word_id', 'lesson_id', name='uq_word_questions_sc_fields'),
     )
 
 class TextBoxQuestion(db.Model):
@@ -33,11 +33,11 @@ class TextBoxQuestion(db.Model):
 
     correct_answer = Column(Text, nullable=False)
 
-    lesson = Column(Integer)
+    lesson_id = Column(Integer)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
     __table_args__ = (
-        UniqueConstraint('tag', 'question_type', 'word_id', 'lesson', name='uq_word_questions_tb_fields'),
+        UniqueConstraint('tag', 'question_type', 'word_id', 'lesson_id', name='uq_word_questions_tb_fields'),
     )
 
 

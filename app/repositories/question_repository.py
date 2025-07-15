@@ -4,18 +4,20 @@ from sqlalchemy.dialects.postgresql import insert
 
 
 class QuestionRepository():
-    def get_questions(self, filters):
-        if filters.question_type == 'tb_question':
+    def get_question_ids(self, filters):
+        if filters['question_type'] == 'tb_question':
             model = TextBoxQuestion
             
         else:
             model = SingleChoiceQuestion
         
         query = model.query
-        query = self.get_queries_by_tag(query, model, filters.tag)
-        query = self.get_queries_by_lesson_ids(query, model, filters.lesson_ids)
+        query = self.get_queries_by_tag(query, model, filters['tag'])
+        query = self.get_queries_by_lesson_ids(query, model, filters['lesson_ids'])
 
-        return query.all()
+        question_ids = query.with_entities(model.id).all()
+
+        return [qid[0] for qid in question_ids]
     
     @staticmethod
     def bulk_insert(model, values, constraint):

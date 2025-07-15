@@ -3,7 +3,6 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 
 class Practice(db.Model):
 	id = Column(Integer, primary_key=True)
-	session_id = Column(Integer, ForeignKey('practice_session.id'), nullable=False)
 
 	practice_type = Column(String, nullable=False)
 	question_type = Column(String, nullable=False)

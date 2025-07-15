@@ -1,35 +1,48 @@
 from flask_login import current_user
 from app.repositories import PracticeSessionRepository, WordRepository, QuestionRepository, PracticeRepository
+from app.models import Practice, PracticeSession
 
 class PracticeService():
     def create_practice(self, filters):
-        questions = QuestionRepository.get_questions(filters)
-        practice_object = self.generate_practice_object(filters, questions)
-        PracticeRepository.insert()
+        question_repo = QuestionRepository()
+        question_ids = question_repo.get_question_ids(filters)
+        practice_object = self.generate_practice_object(question_ids, filters)
+        PracticeRepository.insert_object(practice_object)
 
-    def create_session(self, practice_type, num_questions, lessons):
-        question_data = self.get_question_data_by_practice_type(practice_type)
-        session_object = self.create_session_object(practice_type, num_questions, lessons, question_data)
-        PracticeSessionRepository.insert(session_object)
+        return practice_object
+
+    def create_session(self, filters):
+        practice = self.create_practice(filters)
+        session_object = self.generate_session_object(practice.id, practice.practice_type)
+        PracticeSessionRepository.insert_object(session_object)
+
+        return session_object
+
+    @staticmethod
+    def practice_is_done(session_id):
+        session_repo = PracticeSessionRepository()
+        current_idx = session_repo.get_current_question_idx_by_id(session_id)
+        total_questions = session_repo.get_total_questions_by_id(session_id)
+        if current_idx >= total_questions:
+            return True
+        return False
+
         
     @staticmethod
-    def generate_session_object(practice_type, num_questions, lessons, question_data):
-        session = {
-            'user_id': current_user.id,
-            'practice_type': practice_type,
-            'selected_lessons': lessons,
-            'total_questions': num_questions,
-            'current_question_idx': 0,
-            'status': 'active',
-            'question_data': question_data,
-            'answers': [],
-            'score': 0,
-        }
-        return session
+    def generate_session_object(practice_id, practice_type):
+        return PracticeSession(
+            user_id=current_user.id,
+            practice_id=practice_id,
+            practice_type=practice_type
+        )
     
     @staticmethod
-    def generate_practice_object(filters, questions):
-
+    def generate_practice_object(question_ids, meta):
+        return Practice(
+            practice_type=meta['tag'],
+            question_type=meta['question_type'],
+            question_ids=question_ids
+        )
 
     @staticmethod
     def get_question_data_by_practice_type(practice_type):

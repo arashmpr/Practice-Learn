@@ -4,6 +4,8 @@ from app.models.Word import Word
 from ..practice import practice
 from app.extensions import csrf
 from app.services import PracticeService
+from app.services.practice_service import PRACTICE_STRATEGIES
+from app.repositories import PracticeSessionRepository
 
 
 @practice.route('/list')
@@ -12,45 +14,42 @@ def show_list():
         return redirect(url_for('auth.register'))
     
     practices = PracticeService.get_practices()
-    print("Got the practices")
     lessons = PracticeService.get_lessons()
-    print("Got the lessons")
 
     return render_template('practice/list.html', practices=practices, lessons=lessons)
 
 @practice.route('/start/')
 def start():
+    service = PracticeService()
+    session_repo = PracticeSessionRepository()
 
     practice_type = request.args.get("practice_type")
-    selected_lessons = request.args.getlist("lessons")
-    total_questions = request.args("num_questions")
+    lessons = request.args.getlist("lessons")
+    total_questions = request.args.get('num_questions')
+    filters = {
+        'tag': practice_type,
+        'question_type': 'sc_question',
+        'lesson_ids': lessons
+    }
 
-    if practice_type not in PRACTICE_STRATEGIES:
-        return "Invalid Practice Type", 400
+    session_obj = service.create_session(filters)
     
-    practice_strategy = PRACTICE_STRATEGIES.get(practice_type)
-    practice_strategy.create()
+    session_repo.set_total_questions(session_obj.id, total_questions)
+    session_repo.set_current_question_idx(session_obj.id, 0)
+    session_repo.set_score(session_obj.id, 0)
+    session_repo.set_status(session_obj.id, 'active')
 
-    session['practice_type'] = quiz_type
-    session['current_idx'] = 0
-    session['score'] = 0
+    return redirect(url_for("practice.show", session_id=session_obj.id))
 
-    return redirect(url_for("practice.show"))
+@practice.route('/quiz/<session_id>/')
+def show(session_id):
+    service = PracticeService()
+    session_obj = PracticeSessionRepository.get_object_by_id(session_id)
+    strategy = PRACTICE_STRATEGIES.get(session_obj.practice_type)
 
-@practice.route('/quiz/')
-def show():
-    quiz_type = session['quiz_type']
-    strategy = QUIZ_STRATEGIES.get(quiz_type)
-    if not strategy:
-        return "No quiz strategy set", 400
-    
-    current_idx = session.get('current_idx', 0)
-    word_ids = session.get('quiz_words', [])
-    if current_idx >= len(word_ids):
-        return redirect(url_for('quiz.results'))
-    
-    word = Word.query.get(word_ids[current_idx])
-
+    if service.practice_is_done(session_obj.id):
+        return redirect(url_for('practice.results'))
+        
     return strategy.render_question(word, current_idx + 1, len(word_ids))
 
 @practice.route('/submit/', methods=['POST'])

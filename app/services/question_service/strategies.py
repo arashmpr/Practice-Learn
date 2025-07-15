@@ -19,7 +19,7 @@ class ArticleTextBoxQuestions(Questions):
                 'question_type': 'text_box_question',
                 'question_text': word.word,
                 'correct_answer': word.article,
-                'lesson': word.lesson,
+                'lesson_id': word.lesson,
                 }
             questions.append(question)
         return questions
@@ -42,7 +42,7 @@ class ArticleSingleChoiceQuestions(Questions):
                 'question_text': word.word,
                 'options': options,
                 'correct_answer': word.article,
-                'lesson': word.lesson,
+                'lesson_id': word.lesson,
                 }
             questions.append(question)
         return questions
@@ -62,7 +62,7 @@ class PluralTextBoxQuestions(Questions):
                 'question_type': 'text_box_question',
                 'question_text': word.word,
                 'correct_answer': word.plural,
-                'lesson': word.lesson,
+                'lesson_id': word.lesson,
                 }
             questions.append(question)
         return questions
@@ -82,7 +82,7 @@ class DefinitonTextBoxQuestions(Questions):
                 'question_type': 'text_box_question',
                 'question_text': word.word,
                 'correct_answer': word.definition,
-                'lesson': word.lesson,
+                'lesson_id': word.lesson,
                 }
             questions.append(question)
         return questions
