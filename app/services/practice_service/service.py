@@ -1,14 +1,19 @@
 from flask_login import current_user
-from app.repositories import PracticeSessionRepository, WordRepository
+from app.repositories import PracticeSessionRepository, WordRepository, QuestionRepository, PracticeRepository
 
 class PracticeService():
+    def create_practice(self, filters):
+        questions = QuestionRepository.get_questions(filters)
+        practice_object = self.generate_practice_object(filters, questions)
+        PracticeRepository.insert()
+
     def create_session(self, practice_type, num_questions, lessons):
         question_data = self.get_question_data_by_practice_type(practice_type)
         session_object = self.create_session_object(practice_type, num_questions, lessons, question_data)
         PracticeSessionRepository.insert(session_object)
         
     @staticmethod
-    def create_session_object(practice_type, num_questions, lessons, question_data):
+    def generate_session_object(practice_type, num_questions, lessons, question_data):
         session = {
             'user_id': current_user.id,
             'practice_type': practice_type,
@@ -21,6 +26,10 @@ class PracticeService():
             'score': 0,
         }
         return session
+    
+    @staticmethod
+    def generate_practice_object(filters, questions):
+
 
     @staticmethod
     def get_question_data_by_practice_type(practice_type):
@@ -43,5 +52,7 @@ class PracticeService():
             {'title': 'Definition Quiz', 'description': 'Type the definition of each word', 'key': "definition"}
         ] 
         return practices
+    
+    
 
     

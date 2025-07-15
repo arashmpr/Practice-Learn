@@ -1,34 +1,20 @@
 from app.db import db
-from datetime import datetime
-
-practice_lesson = db.Table('practice_lesson',
-    db.Column('practice_id', db.Integer, db.ForeignKey('pracice_id'), primary_key=True),
-    db.Column('lesson_id', db.Integer, db.ForeignKey('lesson_id'), primary_key=True)
-    )
-
-practice_question = db.Table('practice_question',
-	db.Column('practice_id', db.Integer, db.ForeignKey('practice_id'), primar_key=True),
-	db.Column('question_id', db.Integer, db.ForeignKey('question_id'), primary_key=True)
-	)
+from sqlalchemy import Column, Integer, String, ForeignKey
 
 class Practice(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.String(200), nullable=False)
-	description = db.Column(db.Text)
-	created_at = db.Column(db.DataTime, default=datetime.now(datetime.UTC))
-	has_time = db.Column(db.Boolean, default=False)
-	time_limit = db.Column(db.Integer)
+	id = Column(Integer, primary_key=True)
+	session_id = Column(Integer, ForeignKey('practice_session.id'), nullable=False)
 
-	lessons = db.relationship('Lesson', secondary='practice_lesson', backref='practices')
-	questions = db.relationship('Question', secondary='practice_question', backref='practices')
+	practice_type = Column(String, nullable=False)
+	question_type = Column(String, nullable=False)
+
+	question_ids = Column(db.JSON, nullable=False)
 
 	def to_dict(self):
 		return {
 			'id': self.id,
-			'title': self.title,
-			'description': self.description,
-			'created_at': self.created_at.isoformat(),
-			'has_time': self.has_time,
-			'time_limit': self.time_limit,
-			'lesson_ids': [lesson.id for lesson in self.lessons]
+			'session_id': self.session_id,
+			'practice_type': self.practice_type,
+			'question_type': self.question_type,
+			'question_ids': self.question_ids
 		}
