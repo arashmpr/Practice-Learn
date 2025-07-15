@@ -33,6 +33,10 @@ class QuestionRepository():
     @staticmethod
     def get_queries_by_lesson_ids(query, model, lesson_ids):
         return query.filter(model.lesson_id.in_(lesson_ids))
+    
+    @staticmethod
+    def get_question_by_id(obj_id):
+        return db.session.get(SingleChoiceQuestion, obj_id)
 
 
         

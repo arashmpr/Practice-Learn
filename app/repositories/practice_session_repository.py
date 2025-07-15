@@ -52,4 +52,16 @@ class PracticeSessionRepository():
     def get_total_questions_by_id(obj_id):
         obj = db.session.get(PracticeSession, obj_id)
         return obj.total_questions
+    
+    @staticmethod
+    def get_practice_id_by_id(obj_id):
+        obj = db.session.get(PracticeSession, obj_id)
+        return obj.practice_id
         
+    @staticmethod
+    def increase_and_get_current_idx(obj_id):
+        obj = db.session.get(PracticeSession, obj_id)
+        if obj:
+            obj.current_question_idx = obj.current_question_idx + 1
+            db.session.commit()
+            return obj.current_question_idx

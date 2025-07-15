@@ -2,57 +2,66 @@
 
 {% block title %}Article Quiz - Question {{ question_num }} of {{ total_questions }}{% endblock %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
-{% endblock %}
-
 {% block content %}
-<div class="container">
-    <div class="quiz-container">
-        <!-- Progress Bar -->
-        <div class="quiz-progress">
-            <div class="quiz-progress-text">
-                Question {{ question_num }} of {{ total_questions }}
-            </div>
-            <div class="quiz-progress-bar">
-                <div class="quiz-progress-fill" style="width: {{ (question_num / total_questions * 100) }}%"></div>
-            </div>
-        </div>
+<div class="max-w-3xl w-full mx-auto mt-20 px-4">
+  <div class="bg-white border border-gray-200 shadow-xl rounded-3xl p-8 space-y-8">
 
-        <!-- Question Card -->
-        <div class="quiz-question-card">
-            <div class="quiz-question-header">
-                <span class="quiz-question-type">Article Quiz</span>
-                <h2 class="quiz-question-word">{{ word }}</h2>
-                <p class="quiz-question-definition">{{ definition }}</p>
-            </div>
-
-            <!-- Answer Form -->
-            <form action="{{ url_for('quiz.submit') }}" method="POST" class="quiz-answer-form">
-                <div class="quiz-options-grid">
-                    <div class="quiz-option">
-                        <input type="radio" id="der" name="article" value="der" class="quiz-option-input" required>
-                        <label for="der" class="quiz-option-label">der</label>
-                    </div>
-                    <div class="quiz-option">
-                        <input type="radio" id="die" name="article" value="die" class="quiz-option-input" required>
-                        <label for="die" class="quiz-option-label">die</label>
-                    </div>
-                    <div class="quiz-option">
-                        <input type="radio" id="das" name="article" value="das" class="quiz-option-input" required>
-                        <label for="das" class="quiz-option-label">das</label>
-                    </div>
-                    <div class="quiz-option">
-                        <input type="radio" id="die-pl" name="article" value="die-pl" class="quiz-option-input" required>
-                        <label for="die-pl" class="quiz-option-label">die pl.</label>
-                    </div>
-                </div>
-
-                <div class="quiz-actions">
-                    <button type="submit" class="quiz-submit-btn">Submit Answer</button>
-                </div>
-            </form>
-        </div>
+    <!-- Progress Bar -->
+    <div>
+      <div class="text-sm text-gray-600 font-medium mb-2">
+        Question {{ question_num }} of {{ total_questions }}
+      </div>
+      <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+        <div class="h-full bg-red-500 transition-all duration-300" style="width: {{ (question_num / total_questions * 100) }}%"></div>
+      </div>
     </div>
+
+    <!-- Question -->
+    <div class="text-center">
+      <span class="inline-block text-xs font-semibold uppercase tracking-wider text-red-500 mb-2">
+        Article Quiz
+      </span>
+      <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">{{ word }}</h2>
+      <p class="text-gray-600 text-base sm:text-lg">{{ definition }}</p>
+    </div>
+
+    <!-- Answer Form -->
+    <form method="POST" action="{{ url_for('practice.submit') }}" class="space-y-6">
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-4 text-center">
+        <!-- der -->
+        <label class="cursor-pointer bg-gray-100 hover:bg-red-100 border border-gray-300 rounded-xl py-4 px-2 transition text-gray-800 font-semibold">
+          <input type="radio" name="article" value="der" required class="hidden peer">
+          <span class="peer-checked:text-red-600 peer-checked:font-bold">der</span>
+        </label>
+
+        <!-- die -->
+        <label class="cursor-pointer bg-gray-100 hover:bg-red-100 border border-gray-300 rounded-xl py-4 px-2 transition text-gray-800 font-semibold">
+          <input type="radio" name="article" value="die" required class="hidden peer">
+          <span class="peer-checked:text-red-600 peer-checked:font-bold">die</span>
+        </label>
+
+        <!-- das -->
+        <label class="cursor-pointer bg-gray-100 hover:bg-red-100 border border-gray-300 rounded-xl py-4 px-2 transition text-gray-800 font-semibold">
+          <input type="radio" name="article" value="das" required class="hidden peer">
+          <span class="peer-checked:text-red-600 peer-checked:font-bold">das</span>
+        </label>
+
+        <!-- die pl. -->
+        <label class="cursor-pointer bg-gray-100 hover:bg-red-100 border border-gray-300 rounded-xl py-4 px-2 transition text-gray-800 font-semibold">
+          <input type="radio" name="article" value="die-pl" required class="hidden peer">
+          <span class="peer-checked:text-red-600 peer-checked:font-bold">die pl.</span>
+        </label>
+      </div>
+
+      <!-- Submit -->
+      <div class="pt-4">
+        <button type="submit"
+                class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-200">
+          Submit Answer
+        </button>
+      </div>
+    </form>
+
+  </div>
 </div>
 {% endblock %}

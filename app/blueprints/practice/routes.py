@@ -44,13 +44,16 @@ def start():
 @practice.route('/quiz/<session_id>/')
 def show(session_id):
     service = PracticeService()
-    session_obj = PracticeSessionRepository.get_object_by_id(session_id)
+    session_repo = PracticeSessionRepository()
+    session_obj = session_repo.get_object_by_id(session_id)
     strategy = PRACTICE_STRATEGIES.get(session_obj.practice_type)
 
     if service.practice_is_done(session_obj.id):
         return redirect(url_for('practice.results'))
-        
-    return strategy.render_question(word, current_idx + 1, len(word_ids))
+    current_idx = session_repo.increase_and_get_current_idx(session_id)
+    
+    practice_id = session_repo.get_practice_id_by_id(session_id)
+    return strategy.render_practice(practice_id, current_idx)
 
 @practice.route('/submit/', methods=['POST'])
 @csrf.exempt
