@@ -1,7 +1,15 @@
-from app.services.practice_service.strategies import PracticeStrategies, ArticleStrategy, PRACTICE_STRATEGIES
+from app.services.practice_service.strategies import (
+    BasePracticeStrategy, 
+    ArticleStrategy, 
+    PluralStrategy, 
+    DefinitionStrategy,
+    PRACTICE_STRATEGIES
+)
 
 __all__ = [
-    PracticeStrategies,
-    ArticleStrategy,
-    PRACTICE_STRATEGIES
+    'BasePracticeStrategy',
+    'ArticleStrategy',
+    'PluralStrategy', 
+    'DefinitionStrategy',
+    'PRACTICE_STRATEGIES'
 ]

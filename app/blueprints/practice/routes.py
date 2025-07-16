@@ -52,7 +52,7 @@ def show_question(session_id):
             flash('Invalid practice type', 'error')
             return redirect(url_for('practice.show_list'))
         
-        return strategy.render_question(question_data, session_obj)
+        return strategy.render_question(question_data, session_id)
     
     except Exception as e:
         flash(str(e), 'error')
@@ -61,6 +61,7 @@ def show_question(session_id):
 
 @practice.route('/session/<int:session_id>/submit', methods=['POST'])
 @login_required
+@csrf.exempt
 def submit_answer(session_id):
     try:
         session_obj = PracticeService.get_user_session(current_user.id, session_id)
@@ -95,7 +96,7 @@ def results(session_id):
         results_data = PracticeService.get_session_results(session_obj)
 
         strategy = PRACTICE_STRATEGIES.get(session_obj.practice_type)
-        return strategy.render_results(results_data, session_obj)
+        return strategy.render_results(results_data, session_id)
     
     except Exception as e:
         flash(str(e), 'error')
@@ -111,6 +112,6 @@ def _extract_practice_config(args):
     return {
         'practice_type': practice_type,
         'lessons': lessons,
-        'total_questions': total_questions,
+        'total_questions': int(total_questions),
         'question_type': 'sc_question'
     }

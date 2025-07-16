@@ -26,7 +26,7 @@
     </div>
 
     <!-- Answer Form -->
-    <form method="POST" action="{{ url_for('practice.submit') }}" class="space-y-6">
+    <form method="POST" action="{{ url_for('practice.submit_answer', session_id=session_id) }}" class="space-y-6">
       <div class="grid grid-cols-2 gap-4 sm:grid-cols-4 text-center">
         <!-- der -->
         <label class="cursor-pointer bg-gray-100 hover:bg-red-100 border border-gray-300 rounded-xl py-4 px-2 transition text-gray-800 font-semibold">

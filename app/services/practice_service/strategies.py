@@ -8,10 +8,10 @@ class BasePracticeStrategy:
         self.practice_repo = PracticeRepository()
         self.question_repo = QuestionRepository()
     
-    def render_question(self, question_data):
+    def render_question(self, question_data, session_id):
         raise NotImplementedError()
     
-    def render_results(self, results_data):
+    def render_results(self, results_data, session_id):
         raise NotImplementedError()
     
     def check_answer(self, question, submitted_answer):
@@ -20,25 +20,26 @@ class BasePracticeStrategy:
 
 class ArticleStrategy(BasePracticeStrategy):
     
-    def render_question(self, question_data):
+    def render_question(self, question_data, session_id):
         question = question_data['question']
         
         return render_template(
-            'practice/article-question.html',
+            'practice/article-questions.html',
             word=question.question_text,
             definition = '',
             question_num=question_data['question_number'],
             total_questions=question_data['total_questions'],
+            session_id=session_id
         )
     
-    def render_results(self, results_data):
+    def render_results(self, results_data, session_id):
         return render_template(
             'practice/article-results.html',
-            session=results_data['session'],
+            session_id=session_id,
             score=results_data['score'],
             total_questions=results_data['total_questions'],
             percentage=results_data['percentage'],
-            practice_type='Article Quiz'
+            practice_type='article'
         )
     
     def check_answer(self, question, submitted_answer):
@@ -48,7 +49,7 @@ class ArticleStrategy(BasePracticeStrategy):
 
 class PluralStrategy(BasePracticeStrategy):
     
-    def render_question(self, question_data):
+    def render_question(self, question_data, session_id):
         question = question_data['question']
         
         return render_template(
@@ -60,7 +61,7 @@ class PluralStrategy(BasePracticeStrategy):
             word=question.question_text,
         )
     
-    def render_results(self, results_data):
+    def render_results(self, results_data, session_id):
         return render_template(
             'practice/plural-results.html',
             session=results_data['session'],
@@ -84,7 +85,7 @@ class PluralStrategy(BasePracticeStrategy):
 
 class DefinitionStrategy(BasePracticeStrategy):
     
-    def render_question(self, question_data):
+    def render_question(self, question_data, session_id):
         question = question_data['question']
         
         return render_template(
@@ -96,7 +97,7 @@ class DefinitionStrategy(BasePracticeStrategy):
             word=question.question_text
         )
     
-    def render_results(self, results_data):
+    def render_results(self, results_data, session_id):
         return render_template(
             'practice/definition-results.html',
             session=results_data['session'],
