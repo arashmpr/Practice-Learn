@@ -58,27 +58,29 @@ def show(session_id):
 @practice.route('/submit/', methods=['POST'])
 @csrf.exempt
 def submit():
-    quiz_type = session['quiz_type']
-    strategy = QUIZ_STRATEGIES.get(quiz_type)
-    current_idx = session.get('current_idx', 0)
-    word_ids = session.get('quiz_words', [])
-    word = Word.query.get(word_ids[current_idx])
-    if strategy.check_answers(word, request):
-        session['score'] += 1
+    print("todo")
+    # quiz_type = session['quiz_type']
+    # strategy = QUIZ_STRATEGIES.get(quiz_type)
+    # current_idx = session.get('current_idx', 0)
+    # word_ids = session.get('quiz_words', [])
+    # word = Word.query.get(word_ids[current_idx])
+    # if strategy.check_answers(word, request):
+    #     session['score'] += 1
     
-    session["current_idx"] = current_idx + 1
+    # session["current_idx"] = current_idx + 1
 
-    if current_idx + 1 >= len(word_ids):
-        return redirect(url_for('quiz.results'))
-    else:
-        return redirect(url_for('quiz.show'))
+    # if current_idx + 1 >= len(word_ids):
+    #     return redirect(url_for('quiz.results'))
+    # else:
+    #     return redirect(url_for('quiz.show'))
 
 @practice.route('/results/')
 def results():
-    quiz_type = session['quiz_type']
-    strategy = QUIZ_STRATEGIES.get(quiz_type)
-    word_ids = session.get('quiz_words', [])
-    score = session.get('score', 0)
-    total = len(word_ids)
+    print("todo")
+    # quiz_type = session['quiz_type']
+    # strategy = QUIZ_STRATEGIES.get(quiz_type)
+    # word_ids = session.get('quiz_words', [])
+    # score = session.get('score', 0)
+    # total = len(word_ids)
 
-    return strategy.render_results(word_ids, score, total)
+    # return strategy.render_results(word_ids, score, total)
