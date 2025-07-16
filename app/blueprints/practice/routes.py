@@ -1,86 +1,116 @@
-from flask import render_template, request, redirect, url_for, session
-from flask_login import current_user
+from flask import render_template, request, redirect, url_for, flash
+from flask_login import current_user, login_required
 from app.models.Word import Word
 from ..practice import practice
 from app.extensions import csrf
 from app.services import PracticeService
 from app.services.practice_service import PRACTICE_STRATEGIES
-from app.repositories import PracticeSessionRepository
 
 
 @practice.route('/list')
+@login_required
 def show_list():
-    if not current_user.is_authenticated:
-        return redirect(url_for('auth.register'))
-    
     practices = PracticeService.get_practices()
     lessons = PracticeService.get_lessons()
 
     return render_template('practice/list.html', practices=practices, lessons=lessons)
 
 @practice.route('/start/')
+@login_required
 def start():
-    service = PracticeService()
-    session_repo = PracticeSessionRepository()
+    try:
+        practice_config = _extract_practice_config(request.args)
 
-    practice_type = request.args.get("practice_type")
-    lessons = request.args.getlist("lessons")
-    total_questions = request.args.get('num_questions')
-    filters = {
-        'tag': practice_type,
-        'question_type': 'sc_question',
-        'lesson_ids': lessons
+        session_obj = PracticeService.create_practice_session(
+            user_id=current_user.id,
+            practice_config=practice_config
+        )
+
+        return redirect(url_for('practice.show_question', session_id=session_obj.id))
+    
+    except ValueError as e:
+        flash(str(e), 'error')
+        return redirect(url_for('practice.show_list'))
+
+@practice.route('/session/<int:session_id>/question')
+@login_required
+def show_question(session_id):
+    try:
+        session_obj = PracticeService.get_user_session(current_user.id, session_id)
+
+        if not session_obj:
+            flash('Session not found', 'error')
+            return redirect(url_for('practice.show_list'))
+        
+        if PracticeService.is_session_complete(session_obj):
+            return redirect(url_for('practice.results'), session_id=session_obj.id)
+
+        question_data = PracticeService.get_current_question(session_obj)
+
+        strategy = PRACTICE_STRATEGIES.get(session_obj.practice_type)
+        if not strategy:
+            flash('Invalid practice type', 'error')
+            return redirect(url_for('practice.show_list'))
+        
+        return strategy.render_question(question_data, session_obj)
+    
+    except Exception as e:
+        flash(str(e), 'error')
+        return redirect(url_for('practice.show_list'))
+    
+
+@practice.route('/session/<int:session_id>/submit', methods=['POST'])
+@login_required
+def submit_answer(session_id):
+    try:
+        session_obj = PracticeService.get_user_session(current_user.id, session_id)
+
+        if not session_obj:
+            flash('Session not found', 'error')
+            return redirect(url_for('practice.show_list'))
+        
+        PracticeService.process_answer(session_obj, request.form)
+
+        if PracticeService.is_session_complete(session_obj):
+            return redirect(url_for('practice.results'), session_id=session_id)
+        
+        return redirect(url_for('practice.show_question', session_id=session_id))
+    
+    except Exception as e:
+        flash(str(e), 'error')
+        return redirect(url_for('practice.show_question', session_id=session_id))
+
+@practice.route('/session/<int:session_id>/results')
+@login_required
+def results(session_id):
+    try:
+        session_obj = PracticeService.get_user_session(current_user.id, session_id)
+        if not session_obj:
+            flash('Session not found', 'error')
+            return redirect(url_for('practice.show_list'))
+
+        if not PracticeService.is_session_complete(session_obj):
+            return redirect(url_for('practice.show_question'), session_id=session_id)
+        
+        results_data = PracticeService.get_session_results(session_obj)
+
+        strategy = PRACTICE_STRATEGIES.get(session_obj.practice_type)
+        return strategy.render_results(results_data, session_obj)
+    
+    except Exception as e:
+        flash(str(e), 'error')
+        return redirect(url_for('practice.show_list'))
+
+
+
+def _extract_practice_config(args):
+    practice_type = args.get('practice_type')
+    lessons = args.getlist('lessons')
+    total_questions = args.get('num_questions')
+
+    return {
+        'practice_type': practice_type,
+        'lessons': lessons,
+        'total_questions': total_questions,
+        'question_type': 'sc_question'
     }
-
-    session_obj = service.create_session(filters)
-    
-    session_repo.set_total_questions(session_obj.id, total_questions)
-    session_repo.set_current_question_idx(session_obj.id, 0)
-    session_repo.set_score(session_obj.id, 0)
-    session_repo.set_status(session_obj.id, 'active')
-
-    return redirect(url_for("practice.show", session_id=session_obj.id))
-
-@practice.route('/quiz/<session_id>/')
-def show(session_id):
-    service = PracticeService()
-    session_repo = PracticeSessionRepository()
-    session_obj = session_repo.get_object_by_id(session_id)
-    strategy = PRACTICE_STRATEGIES.get(session_obj.practice_type)
-
-    if service.practice_is_done(session_obj.id):
-        return redirect(url_for('practice.results'))
-    current_idx = session_repo.increase_and_get_current_idx(session_id)
-    
-    practice_id = session_repo.get_practice_id_by_id(session_id)
-    return strategy.render_practice(practice_id, current_idx)
-
-@practice.route('/submit/', methods=['POST'])
-@csrf.exempt
-def submit():
-    print("todo")
-    # quiz_type = session['quiz_type']
-    # strategy = QUIZ_STRATEGIES.get(quiz_type)
-    # current_idx = session.get('current_idx', 0)
-    # word_ids = session.get('quiz_words', [])
-    # word = Word.query.get(word_ids[current_idx])
-    # if strategy.check_answers(word, request):
-    #     session['score'] += 1
-    
-    # session["current_idx"] = current_idx + 1
-
-    # if current_idx + 1 >= len(word_ids):
-    #     return redirect(url_for('quiz.results'))
-    # else:
-    #     return redirect(url_for('quiz.show'))
-
-@practice.route('/results/')
-def results():
-    print("todo")
-    # quiz_type = session['quiz_type']
-    # strategy = QUIZ_STRATEGIES.get(quiz_type)
-    # word_ids = session.get('quiz_words', [])
-    # score = session.get('score', 0)
-    # total = len(word_ids)
-
-    # return strategy.render_results(word_ids, score, total)
