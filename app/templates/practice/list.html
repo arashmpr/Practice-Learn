@@ -4,7 +4,7 @@
 
 {% block content %}
 <!-- Header -->
-<div class="bg-gradient-to-br from-white to-red-50 py-14 border-b border-gray-200">
+<div class="bg-gradient-to-br from-white to-sky-300 py-14 border-b border-gray-200">
   <div class="max-w-[1200px] mx-auto px-4 text-center">
     <h1 class="text-5xl font-extrabold text-gray-800 mb-3 tracking-tight">Choose Your Practice</h1>
     <p class="text-lg text-gray-600">Sharpen your German with interactive challenges 🚀</p>
@@ -16,19 +16,17 @@
   <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
     {% for practice in practices %}
     <div
-      class="relative bg-white bg-opacity-80 backdrop-blur-md border border-gray-200 p-6 rounded-2xl shadow-xl hover:shadow-2xl transform transition-all duration-300 hover:-translate-y-2 hover:border-red-400 cursor-pointer group"
+      class="relative min-h-[300px] bg-white bg-opacity-80 backdrop-blur-md border border-gray-200 p-6 rounded-2xl shadow-xl hover:shadow-2xl transform transition-all duration-300 hover:-translate-y-2 hover:border-sky-700 cursor-pointer group"
       onclick="selectPractice('{{ practice.key }}', '{{ practice.title }}')">
 
       <!-- Fancy Top Border -->
-      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-400 to-pink-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 rounded-t-xl"></div>
-
-      <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-red-700 transition">
+      <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-sky-900 transition">
         {{ practice.title }}
       </h3>
       <p class="text-gray-500 mb-6 text-sm leading-relaxed">{{ practice.description }}</p>
 
       <button
-        class="inline-flex justify-center items-center bg-red-600 text-white text-sm font-semibold px-5 py-2 rounded-lg shadow hover:bg-red-700 transition-all duration-200">
+        class="inline-flex justify-center items-center bg-sky-300 text-white text-sm font-semibold px-5 py-2 rounded-lg shadow hover:bg-red-700 transition-all duration-200">
         Start Practice
       </button>
     </div>
