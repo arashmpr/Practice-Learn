@@ -16,7 +16,7 @@
   <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
     {% for practice in practices %}
     <div
-      class="relative min-h-[300px] bg-white bg-opacity-80 backdrop-blur-md border border-gray-200 p-6 rounded-2xl shadow-xl hover:shadow-2xl transform transition-all duration-300 hover:-translate-y-2 hover:border-sky-700 cursor-pointer group"
+      class="relative min-h-[100px] bg-white bg-opacity-80 backdrop-blur-md border border-gray-200 p-6 rounded-2xl shadow-xl hover:shadow-2xl transform transition-all duration-300 hover:-translate-y-2 hover:border-sky-700 cursor-pointer group"
       onclick="selectPractice('{{ practice.key }}', '{{ practice.title }}')">
 
       <!-- Fancy Top Border -->
@@ -26,7 +26,7 @@
       <p class="text-gray-500 mb-6 text-sm leading-relaxed">{{ practice.description }}</p>
 
       <button
-        class="inline-flex justify-center items-center bg-sky-300 text-white text-sm font-semibold px-5 py-2 rounded-lg shadow hover:bg-red-700 transition-all duration-200">
+        class="inline-flex justify-center items-center bg-sky-300 text-white text-sm font-semibold px-5 py-2 rounded-lg shadow hover:bg-sky-700 transition-all duration-200">
         Start Practice
       </button>
     </div>
@@ -42,7 +42,7 @@
 
     <!-- Close -->
     <button onclick="closeModal()"
-            class="absolute top-3 right-3 text-gray-400 hover:text-red-500 text-2xl transition">&times;</button>
+            class="absolute top-3 right-3 text-gray-400 hover:text-sky-500 text-2xl transition">&times;</button>
 
     <!-- Modal Header -->
     <div class="text-center mb-6 border-b pb-4">
@@ -52,7 +52,7 @@
 
     <!-- Select All -->
     <div class="mb-4 border-b pb-3">
-      <label class="flex items-center gap-2 text-red-600 font-medium cursor-pointer">
+      <label class="flex items-center gap-2 text-sky-600 font-medium cursor-pointer">
         <input type="checkbox" id="selectAll" onchange="toggleSelectAll()" class="rounded">
         <span>Select All Lectures</span>
       </label>
@@ -85,7 +85,7 @@
         Cancel
       </button>
       <button onclick="startPractice()" id="startPracticeBtn" disabled
-              class="px-5 py-2 text-sm rounded bg-red-600 text-white hover:bg-red-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition">
+              class="px-5 py-2 text-sm rounded bg-sky-600 text-white hover:bg-sky-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition">
         Start Practice
       </button>
     </div>
