@@ -11,7 +11,7 @@ class BasePracticeStrategy:
     def render_question(self, question_data, session_id):
         raise NotImplementedError()
     
-    def render_results(self, results_data, session_id):
+    def render_results(self, results_data):
         raise NotImplementedError()
     
     def check_answer(self, question, submitted_answer):
@@ -32,14 +32,12 @@ class ArticleStrategy(BasePracticeStrategy):
             session_id=session_id
         )
     
-    def render_results(self, results_data, session_id):
+    def render_results(self, results_data):
         return render_template(
             'practice/article-results.html',
-            session_id=session_id,
+            passed=True,
             score=results_data['score'],
-            total_questions=results_data['total_questions'],
-            percentage=results_data['percentage'],
-            practice_type='article'
+            total_questions=results_data['total_questions']
         )
     
     def check_answer(self, question, submitted_answer):
@@ -61,7 +59,7 @@ class PluralStrategy(BasePracticeStrategy):
             word=question.question_text,
         )
     
-    def render_results(self, results_data, session_id):
+    def render_results(self, results_data):
         return render_template(
             'practice/plural-results.html',
             session=results_data['session'],
@@ -97,7 +95,7 @@ class DefinitionStrategy(BasePracticeStrategy):
             word=question.question_text
         )
     
-    def render_results(self, results_data, session_id):
+    def render_results(self, results_data):
         return render_template(
             'practice/definition-results.html',
             session=results_data['session'],

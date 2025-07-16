@@ -1,10 +1,74 @@
-{% extends "results.html" %}
+{% extends "base.html" %}
 
-{% block extra_results %}
-    {% for result in results %}
-        <div class="result-item-card">
-            <h3 class="result-item-word">{{ result.question_num }}. {{ result.word }}</h3>
-            <p class="result-item-correct-answer">{{ result.correct_article }}</p>
+{% block title %}Article Practice - Result{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl w-full mx-auto mt-20 px-4">
+  <div class="bg-white border border-gray-200 shadow-xl rounded-3xl p-8 space-y-8">
+
+    <!-- Header -->
+    <div class="text-center">
+      <span class="inline-block text-xs font-semibold uppercase tracking-wider text-red-500 mb-2">
+        Practice Complete
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">Final Results</h1>
+    </div>
+
+    <!-- Result Status -->
+    <div class="text-center">
+      {% if passed %}
+        <div class="mb-4">
+          <div class="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4">
+            <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h2 class="text-4xl sm:text-5xl font-bold text-green-600 mb-2">Well Done!</h2>
+          <p class="text-gray-600 text-lg">You passed the practice session</p>
         </div>
-    {% endfor %}
+      {% else %}
+        <div class="mb-4">
+          <div class="inline-flex items-center justify-center w-20 h-20 bg-orange-100 rounded-full mb-4">
+            <svg class="w-10 h-10 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h2 class="text-4xl sm:text-5xl font-bold text-orange-600 mb-2">Keep Practicing!</h2>
+          <p class="text-gray-600 text-lg">You'll improve with more practice</p>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Final Score Display -->
+    <div class="text-center bg-gradient-to-br from-red-50 to-pink-50 border border-red-200 rounded-xl p-8">
+      <div class="text-lg text-gray-700 mb-2">Final Score</div>
+      <div class="text-5xl font-bold text-red-600 mb-2">
+        {{ score }} / {{ total_questions }}
+      </div>
+      <div class="text-xl text-gray-600 mb-4">
+        {{ "%.1f" | format((score / total_questions * 100)) }}%
+      </div>
+      <div class="text-sm text-gray-500">
+        Questions answered correctly
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="flex justify-center items-center gap-4 pt-4">
+      <a href="{{ url_for('practice.show_list') }}"
+         class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg shadow transition duration-200 flex items-center gap-2">
+        <span>Practice Again</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+      </a>
+      
+      <a href="{{ url_for('main.home') }}"
+         class="text-gray-600 hover:text-red-600 font-medium py-3 px-6 rounded-lg hover:bg-gray-100 transition duration-200">
+        Back to Home
+      </a>
+    </div>
+
+  </div>
+</div>
 {% endblock %}

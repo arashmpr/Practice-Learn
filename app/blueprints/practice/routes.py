@@ -43,7 +43,7 @@ def show_question(session_id):
             return redirect(url_for('practice.show_list'))
         
         if PracticeService.is_session_complete(session_obj):
-            return redirect(url_for('practice.results'), session_id=session_obj.id)
+            return redirect(url_for('practice.results', session_id=session_obj.id))
 
         question_data = PracticeService.get_current_question(session_obj)
 
@@ -73,7 +73,7 @@ def submit_answer(session_id):
         PracticeService.process_answer(session_obj, request.form)
 
         if PracticeService.is_session_complete(session_obj):
-            return redirect(url_for('practice.results'), session_id=session_id)
+            return redirect(url_for('practice.results', session_id=session_id))
         
         return redirect(url_for('practice.show_question', session_id=session_id))
     
@@ -96,7 +96,7 @@ def results(session_id):
         results_data = PracticeService.get_session_results(session_obj)
 
         strategy = PRACTICE_STRATEGIES.get(session_obj.practice_type)
-        return strategy.render_results(results_data, session_id)
+        return strategy.render_results(results_data)
     
     except Exception as e:
         flash(str(e), 'error')
