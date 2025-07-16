@@ -65,3 +65,8 @@ class PracticeSessionRepository():
             obj.current_question_idx = obj.current_question_idx + 1
             db.session.commit()
             return obj.current_question_idx
+    
+    @staticmethod
+    def update_session(session_obj):
+        db.session.merge(session_obj)
+        db.session.commit()
