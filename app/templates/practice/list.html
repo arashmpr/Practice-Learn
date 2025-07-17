@@ -16,19 +16,28 @@
   <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
     {% for practice in practices %}
     <div
-      class="relative min-h-[100px] bg-white bg-opacity-90 backdrop-blur-lg border border-gray-200 p-6 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-sky-600 cursor-pointer group"
+      class="relative group min-h-[220px] bg-gradient-to-br from-white via-sky-50 to-sky-100 border border-gray-200 p-6 rounded-3xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:border-sky-600 cursor-pointer overflow-hidden"
       onclick="selectPractice('{{ practice.key }}', '{{ practice.title }}')">
 
-      <h3 class="text-xl font-semibold text-gray-800 mt-3 mb-2 group-hover:text-sky-800 transition duration-200">
+      <!-- Decorative background circle -->
+      <div class="absolute -top-6 -right-6 w-24 h-24 bg-sky-200 rounded-full opacity-30 group-hover:scale-110 transform transition duration-500"></div>
+
+      <!-- Title -->
+      <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-sky-800 transition duration-200">
         {{ practice.title }}
       </h3>
-      <p class="text-gray-500 text-sm leading-relaxed mb-6">{{ practice.description }}</p>
 
+      <!-- Description -->
+      <p class="text-gray-600 text-sm leading-relaxed mb-8">
+        {{ practice.description }}
+      </p>
+
+      <!-- CTA Button -->
       <button
-        class="inline-flex justify-center items-center bg-sky-500 hover:bg-sky-700 text-white text-sm font-semibold px-5 py-2 rounded-lg shadow transition-all duration-200 group-hover:scale-105">
+        class="absolute bottom-6 left-6 right-6 inline-flex justify-center items-center bg-sky-500 hover:bg-sky-600 text-white text-sm font-semibold px-5 py-2 rounded-xl shadow-md transition-all duration-200 group-hover:scale-105">
         🚀 Start Practice
       </button>
-    </div>
+    </div>  
     {% endfor %}
   </div>
 </section>
