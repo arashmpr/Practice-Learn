@@ -30,11 +30,11 @@
 
     <!-- Answer Form -->
     <form method="POST" action="{{ url_for('practice.submit_answer', session_id=session_id) }}" class="space-y-6">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+      <div class="grid grid-cols-2 gap-6 text-center">
         {% for article in ['der', 'die', 'das', 'die-pl'] %}
         <label class="group cursor-pointer border border-gray-300 rounded-2xl px-6 py-6 bg-gray-50 hover:bg-sky-50 transition duration-200 shadow hover:shadow-md">
           <input type="radio" name="article" value="{{ article }}" required class="hidden peer">
-          <span class="text-lg font-semibold text-gray-700 peer-checked:text-sky-600 peer-checked:font-bold capitalize block transition">
+          <span class="text-lg font-semibold text-gray-700 peer-checked:text-sky-600 peer-checked:font-bold block transition">
             {{ article.replace('-', ' ') }}
           </span>
         </label>
