@@ -87,22 +87,19 @@ class DefinitionStrategy(BasePracticeStrategy):
         question = question_data['question']
         
         return render_template(
-            'practice/definition-question.html',
-            question=question,
-            question_number=question_data['question_number'],
+            'practice/definition-questions.html',
+            word=question.question_text,
+            question_num=question_data['question_number'],
             total_questions=question_data['total_questions'],
-            session_id=question_data['session_id'],
-            word=question.question_text
+            session_id=session_id
         )
     
     def render_results(self, results_data):
         return render_template(
             'practice/definition-results.html',
-            session=results_data['session'],
+            passed=True,
             score=results_data['score'],
-            total_questions=results_data['total_questions'],
-            percentage=results_data['percentage'],
-            practice_type='Definition Quiz'
+            total_questions=results_data['total_questions']
         )
     
     def check_answer(self, question, submitted_answer):

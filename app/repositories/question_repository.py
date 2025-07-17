@@ -5,7 +5,7 @@ from sqlalchemy.dialects.postgresql import insert
 
 class QuestionRepository():
     def get_question_ids(self, filters):
-        if filters['question_type'] == 'tb_question':
+        if filters['question_type'] == 'text_box_question':
             model = TextBoxQuestion
             
         else:
@@ -16,7 +16,6 @@ class QuestionRepository():
         query = self.get_queries_by_lesson_ids(query, model, filters['lesson_ids'])
 
         question_ids = query.with_entities(model.id).all()
-
         return [qid[0] for qid in question_ids]
     
     @staticmethod
@@ -35,9 +34,12 @@ class QuestionRepository():
         return query.filter(model.lesson_id.in_(lesson_ids))
     
     @staticmethod
-    def get_question_by_id(obj_id):
-        return db.session.get(SingleChoiceQuestion, obj_id)
-
+    def get_question_by_id(type, obj_id):
+        if type == 'single_choice_question':
+            return db.session.get(SingleChoiceQuestion, obj_id)
+        elif type == 'text_box_question':
+            return db.session.get(TextBoxQuestion, obj_id)
+        return None
 
         
 

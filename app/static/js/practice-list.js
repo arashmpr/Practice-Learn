@@ -12,36 +12,45 @@ function selectPractice(type, title) {
 }
 
 function openModal(type, title) {
-    selectedType = type;
-    selectedTitle = title;
-    document.getElementById('modalTitle').textContent = title;
-    const modal = document.getElementById('lessonModal')
-    modal.classList.add('visible', 'opacity-100');
-    modal.classList.remove('invisible', 'opacity-0');
-            
-    const lessonOptionsContainer = document.getElementById('lessonOptions');
-    lessonOptionsContainer.innerHTML = '';
-            
-    lessons.forEach(lesson => {
-        const optionDiv = document.createElement('div');
-        optionDiv.className = 'lecture-option';
-                
-        optionDiv.innerHTML = `
-        <input type="checkbox" id="lecture-${lesson.id}" class="lecture-checkbox" onchange="updateStartButton()">
-        <label for="lecture-${lesson.id}" class="lecture-label">
-            <div class="lecture-checkbox-icon"></div>
-            <div class="lecture-info">
-                <div class="lecture-name">${lesson.name}</div>
-                ${lesson.description ? `<div class="lecture-description">${lesson.description}</div>` : ''}
-            </div>
-        </label>
-        `;
-                
-        lessonOptionsContainer.appendChild(optionDiv);
-    });
-            
-    document.getElementById('lessonModal').classList.add('active');
-    document.body.style.overflow = 'hidden';
+  selectedType = type;
+  selectedTitle = title;
+
+  const modal = document.getElementById('lessonModal');
+  const modalContent = modal.querySelector('.modal-content');
+  const lessonOptionsContainer = document.getElementById('lessonOptions');
+
+  // Set modal title
+  document.getElementById('modalTitle').textContent = title;
+
+  // Show modal background
+  modal.classList.remove('invisible', 'opacity-0');
+  modal.classList.add('visible', 'opacity-100');
+
+  // Animate modal content
+  modalContent.classList.remove('opacity-0', 'scale-95', 'translate-y-6');
+  modalContent.classList.add('opacity-100', 'scale-100', 'translate-y-0');
+
+  // Prevent background scroll
+  document.body.style.overflow = 'hidden';
+
+  // Clear previous lessons
+  lessonOptionsContainer.innerHTML = '';
+
+  // Populate lessons
+  lessons.forEach(lesson => {
+    const optionDiv = document.createElement('div');
+    optionDiv.className = 'lecture-option flex items-start gap-3 p-3 rounded-lg border border-gray-200 hover:border-sky-400 transition';
+
+    optionDiv.innerHTML = `
+      <input type="checkbox" id="lecture-${lesson.id}" class="lecture-checkbox mt-1 text-sky-600 focus:ring-sky-500 rounded" onchange="updateStartButton()">
+      <label for="lecture-${lesson.id}" class="flex flex-col text-sm text-gray-800 cursor-pointer w-full">
+        <span class="font-medium">${lesson.name}</span>
+        ${lesson.description ? `<span class="text-gray-500 text-xs mt-1">${lesson.description}</span>` : ''}
+      </label>
+    `;
+
+    lessonOptionsContainer.appendChild(optionDiv);
+  });
 }
 
 function closeModal() {

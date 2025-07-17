@@ -30,6 +30,7 @@ def start():
     
     except ValueError as e:
         flash(str(e), 'error')
+        print("Error occured in practice start")
         return redirect(url_for('practice.show_list'))
 
 @practice.route('/session/<int:session_id>/question')
@@ -56,6 +57,7 @@ def show_question(session_id):
     
     except Exception as e:
         flash(str(e), 'error')
+        print("Error occured in practice show_question")
         return redirect(url_for('practice.show_list'))
     
 
@@ -79,6 +81,7 @@ def submit_answer(session_id):
     
     except Exception as e:
         flash(str(e), 'error')
+        print("Error occured in practice submit_answer")
         return redirect(url_for('practice.show_question', session_id=session_id))
 
 @practice.route('/session/<int:session_id>/results')
@@ -100,6 +103,7 @@ def results(session_id):
     
     except Exception as e:
         flash(str(e), 'error')
+        print("Error occured in practice results")
         return redirect(url_for('practice.show_list'))
 
 
@@ -108,10 +112,14 @@ def _extract_practice_config(args):
     practice_type = args.get('practice_type')
     lessons = args.getlist('lessons')
     total_questions = args.get('num_questions')
+    question_type = 'text_box_question'
+
+    if practice_type == 'article':
+        question_type = 'single_choice_question'
 
     return {
         'practice_type': practice_type,
         'lessons': lessons,
         'total_questions': int(total_questions),
-        'question_type': 'sc_question'
+        'question_type': question_type
     }

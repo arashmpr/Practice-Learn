@@ -1,3 +1,4 @@
+from flask import flash
 from app.repositories import PracticeSessionRepository, WordRepository, QuestionRepository, PracticeRepository
 from app.models import Practice, PracticeSession
 from app.services.practice_service import PRACTICE_STRATEGIES
@@ -19,7 +20,6 @@ class PracticeService:
             score=0,
             status='active'
         )
-        
         PracticeSessionRepository.insert_object(session_obj)
         return session_obj
     
@@ -36,20 +36,25 @@ class PracticeService:
     
     @staticmethod
     def get_current_question(session_obj):
-        practice = PracticeRepository.get_obj_by_id(session_obj.practice_id)
-        question_ids = practice.question_ids
-        
-        if session_obj.current_question_idx < len(question_ids):
-            current_question_id = question_ids[session_obj.current_question_idx]
-            question = QuestionRepository.get_question_by_id(current_question_id)
+        try:
+            practice = PracticeRepository.get_obj_by_id(session_obj.practice_id)
+            question_ids = practice.question_ids
             
-            return {
-                'question': question,
-                'question_number': session_obj.current_question_idx + 1,
-                'total_questions': session_obj.total_questions,
-                'session_id': session_obj.id
-            }
-        return None
+            if session_obj.current_question_idx < len(question_ids):
+                current_question_id = question_ids[session_obj.current_question_idx]
+                question = QuestionRepository.get_question_by_id(practice.question_type, current_question_id)
+                
+
+                return {
+                    'question': question,
+                    'question_number': session_obj.current_question_idx + 1,
+                    'total_questions': session_obj.total_questions,
+                    'session_id': session_obj.id
+                }
+        except Exception as e:
+            flash(str(e), 'error')
+            print("Error occured in practice start")
+            return None
     
     @staticmethod
     def process_answer(session_obj, form_data):
@@ -99,7 +104,6 @@ class PracticeService:
             'practice': practice,
             'score': session_obj.score,
             'total_questions': session_obj.total_questions,
-            'percentage': (session_obj.score / session_obj.total_questions) * 100 if session_obj.total_questions > 0 else 0,
             'user_answers': session_obj.user_answers or []
         }
     
@@ -153,8 +157,8 @@ class PracticeService:
     @staticmethod
     def get_practices():
         practices = [
-            {'title': 'Article Quiz', 'description': 'Choose the article of each word', 'key': "article"},
-            {'title': 'Plural Quiz', 'description': 'Type the plural form of each word', 'key': "plural"},
-            {'title': 'Definition Quiz', 'description': 'Type the definition of each word', 'key': "definition"}
+            {'title': 'Article Practice', 'description': 'Choose the article of each word', 'key': "article"},
+            {'title': 'Plural Practice', 'description': 'Type the plural form of each word', 'key': "plural"},
+            {'title': 'Definition Practice', 'description': 'Type the definition of each word', 'key': "definition"}
         ] 
         return practices

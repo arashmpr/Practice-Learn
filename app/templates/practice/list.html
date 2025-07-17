@@ -3,73 +3,81 @@
 {% block title %}Choose Your Practice{% endblock %}
 
 {% block content %}
-<!-- Header -->
-<div class="bg-gradient-to-br from-white to-sky-300 py-14 border-b border-gray-200">
+<!-- HEADER -->
+<div class="bg-gradient-to-br from-white via-sky-100 to-sky-300 py-16 border-b border-gray-200 shadow-inner">
   <div class="max-w-[1200px] mx-auto px-4 text-center">
-    <h1 class="text-5xl font-extrabold text-gray-800 mb-3 tracking-tight">Choose Your Practice</h1>
+    <h1 class="text-5xl font-extrabold text-gray-800 mb-3 tracking-tight drop-shadow-sm">Choose Your Practice</h1>
     <p class="text-lg text-gray-600">Sharpen your German with interactive challenges 🚀</p>
   </div>
 </div>
 
-<!-- Practice Cards -->
-<section class="max-w-[1200px] mx-auto px-4 py-16">
+<!-- PRACTICE CARDS -->
+<section class="max-w-[1200px] mx-auto px-4 py-20">
   <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
     {% for practice in practices %}
     <div
-      class="relative min-h-[100px] bg-white bg-opacity-80 backdrop-blur-md border border-gray-200 p-6 rounded-2xl shadow-xl hover:shadow-2xl transform transition-all duration-300 hover:-translate-y-2 hover:border-sky-700 cursor-pointer group"
+      class="relative min-h-[100px] bg-white bg-opacity-90 backdrop-blur-lg border border-gray-200 p-6 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-sky-600 cursor-pointer group"
       onclick="selectPractice('{{ practice.key }}', '{{ practice.title }}')">
 
-      <!-- Fancy Top Border -->
-      <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-sky-900 transition">
+      <h3 class="text-xl font-semibold text-gray-800 mt-3 mb-2 group-hover:text-sky-800 transition duration-200">
         {{ practice.title }}
       </h3>
-      <p class="text-gray-500 mb-6 text-sm leading-relaxed">{{ practice.description }}</p>
+      <p class="text-gray-500 text-sm leading-relaxed mb-6">{{ practice.description }}</p>
 
       <button
-        class="inline-flex justify-center items-center bg-sky-300 text-white text-sm font-semibold px-5 py-2 rounded-lg shadow hover:bg-sky-700 transition-all duration-200">
-        Start Practice
+        class="inline-flex justify-center items-center bg-sky-500 hover:bg-sky-700 text-white text-sm font-semibold px-5 py-2 rounded-lg shadow transition-all duration-200 group-hover:scale-105">
+        🚀 Start Practice
       </button>
     </div>
     {% endfor %}
   </div>
 </section>
 
-<!-- Modal -->
+<!-- MODAL -->
 <div id="lessonModal"
-     class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 invisible opacity-0 transition-opacity duration-300">
+     class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center invisible opacity-0 transition-opacity duration-300">
   <div
-    class="bg-white rounded-2xl shadow-2xl w-[90%] max-w-xl max-h-[85vh] overflow-y-auto p-6 transform scale-95 translate-y-5 transition-transform duration-300 modal-content relative">
+    class="bg-white rounded-2xl shadow-xl w-full max-w-xl max-h-[85vh] overflow-hidden transform scale-95 opacity-0 translate-y-6 transition-all duration-300 modal-content relative flex flex-col"
+    style="transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);">
 
-    <!-- Close -->
+    <!-- Close Button -->
     <button onclick="closeModal()"
-            class="absolute top-3 right-3 text-gray-400 hover:text-sky-500 text-2xl transition">&times;</button>
+            class="absolute top-4 right-4 text-gray-400 hover:text-sky-600 text-2xl transition"
+            aria-label="Close Modal">
+      &times;
+    </button>
 
     <!-- Modal Header -->
-    <div class="text-center mb-6 border-b pb-4">
+    <div class="text-center border-b border-gray-200 px-6 pt-8 pb-4">
       <h2 id="modalTitle" class="text-2xl font-bold text-gray-800 mb-1">Practice Title</h2>
       <p class="text-sm text-gray-500">Select the lectures you want to practice</p>
     </div>
 
     <!-- Select All -->
-    <div class="mb-4 border-b pb-3">
+    <div class="px-6 py-4 border-b border-gray-100">
       <label class="flex items-center gap-2 text-sky-600 font-medium cursor-pointer">
-        <input type="checkbox" id="selectAll" onchange="toggleSelectAll()" class="rounded">
+        <input type="checkbox" id="selectAll"
+               class="rounded border-gray-300 text-sky-500 focus:ring-sky-500"
+               onchange="toggleSelectAll()">
         <span>Select All Lectures</span>
       </label>
     </div>
 
     <!-- Lecture Options -->
-    <div id="lessonOptions" class="flex flex-col gap-3 mb-6">
-      <!-- Filled dynamically -->
+    <div id="lessonOptions"
+         class="flex-1 overflow-y-auto px-6 py-4 space-y-3 scroll-smooth">
+      <!-- Filled dynamically by JS -->
     </div>
 
     <!-- Settings -->
-    <div class="mb-6 border-t pt-4">
+    <div class="px-6 py-4 border-t border-gray-100">
       <h3 class="font-medium text-gray-800 mb-3">Settings</h3>
       <div>
-        <label for="modalNumQuestions" class="block text-sm font-medium text-gray-700 mb-1">Number of Questions</label>
+        <label for="modalNumQuestions" class="block text-sm font-medium text-gray-700 mb-1">
+          Number of Questions
+        </label>
         <select id="modalNumQuestions"
-                class="w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-800 bg-white">
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400">
           <option value="5">5 Questions</option>
           <option value="10" selected>10 Questions</option>
           <option value="15">15 Questions</option>
@@ -78,8 +86,8 @@
       </div>
     </div>
 
-    <!-- Modal Footer -->
-    <div class="flex justify-end gap-3">
+    <!-- Footer -->
+    <div class="flex justify-end items-center gap-3 px-6 py-4 border-t border-gray-100">
       <button onclick="closeModal()"
               class="px-5 py-2 text-sm rounded bg-gray-100 text-gray-600 hover:bg-gray-200 transition">
         Cancel
