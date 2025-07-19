@@ -112,10 +112,8 @@ def _extract_practice_config(args):
     practice_type = args.get('practice_type')
     lessons = args.getlist('lessons')
     total_questions = args.get('num_questions')
-    question_type = 'text_box_question'
-
-    if practice_type == 'article':
-        question_type = 'single_choice_question'
+    question_type = args.get('question_type')
+    print(question_type)
 
     return {
         'practice_type': practice_type,
