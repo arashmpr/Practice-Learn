@@ -79,8 +79,7 @@
     </div>
 
     <!-- Settings -->
-    <div class="px-6 py-4 border-t border-gray-100">
-      <h3 class="font-medium text-gray-800 mb-3">Settings</h3>
+    <div class="px-6 py-4 border-t border-gray-100 space-y-6">
       <div>
         <label for="modalNumQuestions" class="block text-sm font-medium text-gray-700 mb-1">
           Number of Questions
@@ -92,6 +91,24 @@
           <option value="15">15 Questions</option>
           <option value="20">20 Questions</option>
         </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          Choose Question Type
+        </label>
+        <div class="flex gap-4">
+          <label class="flex items-center gap-2 text-sm font-medium text-gray-700 cursor-pointer">
+            <input type="radio" name="questionType" value="text"
+                   class="text-sky-600 focus:ring-sky-500" checked>
+            Text Box
+          </label>
+          <label class="flex items-center gap-2 text-sm font-medium text-gray-700 cursor-pointer">
+            <input type="radio" name="questionType" value="choice"
+                   class="text-sky-600 focus:ring-sky-500">
+            Single Choice
+          </label>
+        </div>
       </div>
     </div>
 

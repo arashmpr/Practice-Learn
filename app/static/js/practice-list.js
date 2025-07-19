@@ -105,24 +105,21 @@ function updateStartButton() {
 
 function startPractice() {
     console.log("Starting practice...");
-    
+
     const selectedLessons = Array.from(document.querySelectorAll('.lecture-checkbox:checked'))
         .map(cb => cb.id.replace('lecture-', ''));
     const numQuestions = document.getElementById('modalNumQuestions').value;
-        
+    const questionType = document.querySelector('input[name="questionType"]:checked').value;
+
     if (selectedLessons.length === 0) {
         alert('Please select at least one lecture.');
         return;
     }
-        
-    // Build URL with selected lectures
+
     const lessonParams = selectedLessons.map(id => `lessons=${id}`).join('&');
-    const url = `/start/?practice_type=${selectedType}&num_questions=${numQuestions}&${lessonParams}`;
-        
+    const url = `/start/?practice_type=${selectedType}&num_questions=${numQuestions}&question_type=${questionType}&${lessonParams}`;
+
     console.log('Starting practice with URL:', url);
-    console.log('Selected practice type:', selectedType);
-    console.log('Selected lessons:', selectedLessons);
-    
     window.location.href = url;
     closeModal();
 }
