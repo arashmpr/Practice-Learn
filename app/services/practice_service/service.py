@@ -133,9 +133,11 @@ class PracticeService:
             raise ValueError(f"No questions found for practice type: {practice_config['practice_type']}")
         
         random.shuffle(question_ids)
-        
-        if len(question_ids) > practice_config['total_questions']:
-            question_ids = question_ids[:practice_config['total_questions']]
+
+        if not practice_config['total_questions'] == 'all':
+            if len(question_ids) > int(practice_config['total_questions']):
+                question_ids = question_ids[:practice_config['total_questions']]
+            
         
         practice_object = Practice(
             practice_type=practice_config['practice_type'],

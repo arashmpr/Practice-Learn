@@ -1,5 +1,5 @@
 from app.db import db
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String
 
 class Practice(db.Model):
 	id = Column(Integer, primary_key=True)

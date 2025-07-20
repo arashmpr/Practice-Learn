@@ -10,6 +10,8 @@ class Word(db.Model):
     definition = Column(String(32))
     lesson = Column(Integer, nullable=False)
 
+    example = Column(db.JSON, default=lambda: [])
+
     __table_args__ = (
         UniqueConstraint('word', 'lesson', name='uq_word_fields'),
     )
