@@ -103,7 +103,7 @@ class DefinitionStrategy(BasePracticeStrategy):
     def check_answer(self, question, submitted_answer):
         correct_answers = {ans.lower().strip() for ans in question.correct_answer}
         submitted = submitted_answer.lower().strip()
-        
+
         return submitted in correct_answers
 
 

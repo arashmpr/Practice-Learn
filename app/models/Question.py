@@ -1,6 +1,6 @@
 from app.db import db
 from datetime import datetime, timezone
-from sqlalchemy import Column, Integer, String, Text, UniqueConstraint
+from sqlalchemy import Column, Integer, String, Text, UniqueConstraint, JSON
 
 class SingleChoiceQuestion(db.Model):
     __tablename__ = 'single_choice_question'
@@ -12,8 +12,8 @@ class SingleChoiceQuestion(db.Model):
     question_type = Column(String(64), default='single_choice_question', nullable=False)
     question_text = Column(String(256), nullable=False)
     
-    options = Column(db.JSON, nullable=False)
-    correct_answer = Column(Text, nullable=False)
+    options = Column(JSON, nullable=False)
+    correct_answer = Column(JSON, nullable=False)
 
     lesson_id = Column(Integer)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
@@ -31,7 +31,7 @@ class TextBoxQuestion(db.Model):
     question_type = Column(String(32), default='text_box_question', nullable='False')
     question_text = Column(String(256), nullable=False)
 
-    correct_answer = Column(Text, nullable=False)
+    correct_answer = Column(JSON, nullable=False)
 
     lesson_id = Column(Integer)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
