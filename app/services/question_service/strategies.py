@@ -56,15 +56,16 @@ class PluralTextBoxQuestions(Questions):
     def generate_values(self, words):
         questions = []
         for word in words:
-            question = {
-                'tag': 'plural',
-                'word_id': word.id,
-                'question_type': 'text_box_question',
-                'question_text': word.word,
-                'correct_answer': word.plural,
-                'lesson_id': word.lesson,
-                }
-            questions.append(question)
+            if word.plural:
+                question = {
+                    'tag': 'plural',
+                    'word_id': word.id,
+                    'question_type': 'text_box_question',
+                    'question_text': word.word,
+                    'correct_answer': word.plural,
+                    'lesson_id': word.lesson,
+                    }
+                questions.append(question)
         return questions
             
     def bulk_insert(self, words):

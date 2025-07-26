@@ -68,14 +68,7 @@ class PluralStrategy(BasePracticeStrategy):
         )
     
     def check_answer(self, question, submitted_answer):
-        correct = question.correct_answer.lower().strip()
-        submitted = submitted_answer.lower().strip()
-        
-        if '/' in correct:
-            acceptable_answers = [ans.strip() for ans in correct.split('/')]
-            return submitted in acceptable_answers
-        
-        return correct == submitted
+        return question.correct_answer.lower().strip() == submitted_answer.lower().strip()
     
 
 
