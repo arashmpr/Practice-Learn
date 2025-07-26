@@ -21,7 +21,7 @@ class WordService():
                     'word': line['word'],
                     'article': line['article'],
                     'plural': line['plural'],
-                    'definition': line['definition'],
+                    'definition': line['definition'].split('/'),
                     'lesson': line['lesson']
                 }
                 values.append(value)

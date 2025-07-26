@@ -101,10 +101,10 @@ class DefinitionStrategy(BasePracticeStrategy):
         )
     
     def check_answer(self, question, submitted_answer):
-        correct = question.correct_answer.lower().strip()
+        correct_answers = {ans.lower().strip() for ans in question.correct_answer}
         submitted = submitted_answer.lower().strip()
         
-        return correct == submitted
+        return submitted in correct_answers
 
 
 PRACTICE_STRATEGIES = {

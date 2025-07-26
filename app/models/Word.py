@@ -1,5 +1,5 @@
 from app.db import db
-from sqlalchemy import Column, Integer, String, UniqueConstraint
+from sqlalchemy import Column, Integer, String, UniqueConstraint, JSON
 
 class Word(db.Model):
     __tablename__ = 'word'
@@ -7,7 +7,7 @@ class Word(db.Model):
     word = Column(String(64), nullable=False)
     article = Column(String(16))
     plural = Column(String(32))
-    definition = Column(String(32))
+    definition = Column(JSON)
     lesson = Column(Integer, nullable=False)
 
     example = Column(db.JSON, default=lambda: [])

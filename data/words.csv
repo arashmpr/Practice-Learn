@@ -10,7 +10,7 @@ Kaffee,der,Kaffees,coffee,1
 Tee,der,Tees,tea,1
 Sport,der,,sport,1
 Handynummer,die,Handynummern,mobile number,1
-Frau,die,Frauen,Mrs. / women,1
+Frau,die,Frauen,Mrs./wome/wife,1
 Telefonnummer,die,Telefonnummern,telephone number,1
 Jeans,die,Jeans,jeans,1
 Email-Adresse,die,Email-Adressen,email address,1
@@ -26,34 +26,34 @@ Auto,das,Autos,car,1
 Taxi,das,Taxis,taxi,1
 Bier,das,Biere,beer,1
 Müsli,das,Müslis,musli,1
-Mensch,der,Menschen,man / human being / man kind,2
+Mensch,der,Menschen,man/human being/man kind,2
 Hund,der,Hunde,dog,2
 Fußball,der,,football,2
-Freund,der,Freunde,boyfriend / male friend,2
+Freund,der,Freunde,boyfriend/friend/male friend,2
 Vater,der,Väter,father,2
 Bruder,der,Brüder,brother,2
 Großvater,der,Großväter,grandfather,2
 Mann,der,Männer,man,2
 Junge,der,Jungen,boy,2
 Laptop,der,Laptops,laptop,2
-Friseur,der,Friseure,(male) hair dresser,2
-Architekt,der,Architekten,(male) architect,2
+Friseur,der,Friseure,hair dresser/male hair dresser,2
+Architekt,der,Architekten,architect/male architect,2
 Job,der,Jobs,job,2
-Kollege,der,Kollegen,(male) colleague,2
-Chef,der,Chefs,(male) boss,2
-Studie,die,Studien,essay / study,2
-Stadt,die,Städte,city / town,2
+Kollege,der,Kollegen,colleague/male colleague,2
+Chef,der,Chefs,boss/male boss,2
+Studie,die,Studien,essay/study,2
+Stadt,die,Städte,city/town,2
 Katze,die,Katzen,cat,2
-Freundin,die,Freundinnen,girlfriend / female friend,2
+Freundin,die,Freundinnen,girlfriend/friend/female friend,2
 Familie,die,Familien,family,2
 Mutter,die,Mütter,mother,2
 Schwester,die,Schwestern,sister,2
 Großmutter,die,Großmütter,grandmother,2
-Frau,die,Frauen,Mrs. / women,2
-Friseurin,die,Friseurinnen,(female) hair dresser,2
-Architektin,die,Architektinnen,(female) architect,2
-Kollegin,die,Kolleginnen,(female) colleague,2
-Chefin,die,Chefinnen,(female) boss,2
+Frau,die,Frauen,Mrs./women/wife,2
+Friseurin,die,Friseurinnen,female hair dresser/hair dresser,2
+Architektin,die,Architektinnen,female architect/architect,2
+Kollegin,die,Kolleginnen,female colleague/colleague,2
+Chefin,die,Chefinnen,female boss/boss,2
 App,die,Apps,app,2
 Pony,das,Ponys,pony,2
 Hobby,das,Hobbys,hobby,2
@@ -85,8 +85,8 @@ Gast,der,Gäste,guest,3
 Familienvater,der,Familienväter,family man,3
 Student,der,Studenten,student,3
 Deutschlehrer,der,Deutschlehrer,german teacher,3
-Tourist,der,Touristen,tourist,3
-Berliner,der,Berliner,berliner,3
+Tourist,der,Touristen,tourist/male tourist,3
+Berliner,der,Berliner,berliner/male berliner,3
 Vegetarier,der,Vegetarier,vegetarian,3
 Regenbogen,der,Regenbögen,rainbow,3
 Banane,die,Bananen,banana,3
@@ -104,8 +104,8 @@ Flasche,die,Flaschen,bottle,3
 Köchin,die,Köchinnen,cook,3
 Studentin,die,Studentinnen,student,3
 Deutschlehrerin,die,Duetschlehrerinnen,german teacher,3
-Touristin,die,Touristinnen,tourist,3
-Berlinerin,die,Berlinerinnen,berliner,3
+Touristin,die,Touristinnen,tourist/female tourist,3
+Berlinerin,die,Berlinerinnen,berliner/female berliner,3
 Adresse,die,Adressen,address,3
 Webseite,die,Webseiten,website,3
 Vegetarierin,die,Vegetarierinnen,vegetarian,3
@@ -125,7 +125,7 @@ Brötchen,das,Brötchen,bun,3
 Ei,das,Eier,egg,3
 Kilo,das,,kilo,3
 Gramm,das,,gram,3
-Stück,das,Stücke,piece / unit,3
+Stück,das,Stücke,piece/unit,3
 Lieblingsessen,das,Lieblingsessen,favorite food,3
 Essen,das,Essen,food,3
 Restaurant,das,Restaurants,restaurant,3
@@ -138,7 +138,7 @@ Manager,der,Manager,manager,4
 IT-Ingenieur,der,IT-Ingenieure,IT engineer,4
 Taxifahrer,der,Taxifahrer,taxi driver,4
 Text,der,Texte,text,4
-Termin,der,Termine,appointment / deadline,4
+Termin,der,Termine,appointment/deadline,4
 Monat,der,Monate,month,4
 Tag,der,Tage,day,4
 Rentner,der,Rentner,senior citizen,4
@@ -150,13 +150,13 @@ USB-Stick,der,USB-Sticks,USB stick,4
 Support,der,Supporte,support,4
 Chat,der,Chats,chat,4
 Status,der,,status,4
-Tarif,der,Tarife,tariff / rate / price,4
+Tarif,der,Tarife,tariff/rate/price,4
 Podcast,der,Podcasts,podcast,4
 Partner,der,Partner,partner,4
 Kindergarten,der,Kindergärten,kindergarten,4
-Firma,die,Firmen,firm / company,4
+Firma,die,Firmen,firm/company,4
 Visitenkarte,die,Visitenkarten,business card,4
-Arbeit,die,Arbeiten,work / job,4
+Arbeit,die,Arbeiten,work/job,4
 Polizistin,die,Polizistinnen,police officer,4
 Managerin,die,Managerinnen,manager,4
 IT-Ingenieurin,die,IT-Ingenieurinnen,IT engineer,4
@@ -174,7 +174,7 @@ Partnerin,die,Partnerinnen,partner,4
 U-Bahn,die,U-Bahnen,subway,4
 Pause,die,Pausen,break,4
 Viertel,das,Viertel,quarter,4
-T-Shirt,das,T-Shirts,T-shirt,4
+T-Shirt,das,T-Shirts,Tshirt,4
 Büro,das,Büros,office,4
 Telefon,das,Telefone,phone,4
 Telefongespräch,das,Telefongespräche,phone conversation,4
